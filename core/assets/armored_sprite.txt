@@ -1,0 +1,12 @@
+armored_sprite.png
+size: 64, 1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sprite_walk_right
+  rotate: true
+  xy: 0, 0
+  size: 584, 64
+  orig: 584, 64
+  offset: 0, 0
+  index: -1
