@@ -11,7 +11,7 @@ public class Platformer extends Game {
 
     public static final int V_WIDTH = 1200;
     public static final int V_HEIGHT = 1200;
-    public static final float PPM = 1;
+    public static final float PPM = 100;
     private SpriteBatch mBatch;
 
     @Override
