@@ -11,18 +11,26 @@ public class Assets {
 
     private Texture mSpriteSheet;
     private TextureRegion[] mAlienShoot = new TextureRegion[12];
-    private TextureRegion[] mAlienCrouch = new TextureRegion[4];
+    private TextureRegion[] mAlienCrouch = new TextureRegion[5];
+    private TextureRegion[] mAlienStand = new TextureRegion[2];
     private TextureRegion[] mAlienDeath = new TextureRegion[12];
-    private TextureRegion[] mAlienJump = new TextureRegion[12];
+    private TextureRegion[] mAlienJump = new TextureRegion[6];
+    private TextureRegion[] mAlienFall = new TextureRegion[3];
+    private TextureRegion[] mAlienLand = new TextureRegion[3];
+
     private TextureRegion[] mAlienRun = new TextureRegion[12];
     private TextureRegion[] mAlienWalk = new TextureRegion[12];
 
     private Animation mAlienWalkingAnimation;
+    private Animation mAlienStandingAnimation;
     private Animation mAlienRunningAnimation;
     private Animation mAlienJumpAnimation;
+    private Animation mAlienFallingAnimation;
+    private Animation mAlienLandingAnimation;
     private Animation mAlienDeathAnimation;
     private Animation mAlienCrouchAnimation;
     private Animation mAlienShootAnimation;
+
 
 
    public void load(){
@@ -40,8 +48,16 @@ public class Assets {
            mAlienCrouch[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
            xLocation += 128;
        }
+       xLocation = 0;
+       for(int i = 0; i < mAlienStand.length; i++){
+           mAlienStand[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+           xLocation += 128;
+       }
+
+
        yLocation += 128;
        xLocation = 0;
+
        for(int i = 0; i < mAlienDeath.length; i++){
            mAlienDeath[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
            xLocation += 128;
@@ -52,6 +68,17 @@ public class Assets {
            mAlienJump[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
            xLocation += 128;
        }
+
+       for(int i = 0; i < mAlienFall.length; i++){
+           mAlienFall[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+           xLocation += 128;
+       }
+
+       for(int i = 0; i < mAlienLand.length; i++){
+           mAlienLand[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+           xLocation += 128;
+       }
+
        yLocation += 128;
        xLocation = 0;
        for(int i = 0; i < mAlienRun.length; i++){
@@ -67,16 +94,14 @@ public class Assets {
 
        mAlienWalkingAnimation = new Animation(0.08f, mAlienWalk);
        mAlienRunningAnimation = new Animation(0.08f, mAlienRun);
-       mAlienJumpAnimation = new Animation(0.08f, mAlienJump);
+       mAlienStandingAnimation = new Animation(0.6f, mAlienStand);
+       mAlienJumpAnimation = new Animation(0.05f, mAlienJump);
+       mAlienFallingAnimation = new Animation(0.2f, mAlienFall);
+       mAlienLandingAnimation = new Animation(0.1f, mAlienLand);
        mAlienDeathAnimation = new Animation(0.08f, mAlienDeath);
        mAlienCrouchAnimation = new Animation(0.08f, mAlienCrouch);
        mAlienShootAnimation = new Animation(0.08f, mAlienShoot);
-
    }
-
-    public TextureRegion getTexture(int num){
-        return this.mAlienWalk[num];
-    }
 
     public Animation getWalkingAnimation(){
         return this.mAlienWalkingAnimation;
@@ -84,6 +109,10 @@ public class Assets {
 
     public Animation getAlienRunningAnimation(){
         return this.mAlienRunningAnimation;
+    }
+
+    public Animation getAlienStandingAnimation(){
+        return this.mAlienStandingAnimation;
     }
 
     public Animation getAlienJumpAnimation(){
@@ -102,6 +131,12 @@ public class Assets {
         return this.mAlienCrouchAnimation;
     }
 
+    public Animation getAlienFallingAnimation(){
+        return this.mAlienFallingAnimation;
+    }
+    public Animation getAlienLandingAnimation(){
+        return this.mAlienLandingAnimation;
+    }
 
     public Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));

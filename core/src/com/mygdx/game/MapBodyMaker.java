@@ -14,9 +14,9 @@ public class MapBodyMaker {
 
     private float ppt = 0f;
 
-    public Array<Body> buildShapes(Map map, float pixels, World world) {
+    public Array<Body> buildShapes(Map map, float pixels, World world, String name, String data) {
         ppt = pixels;
-        MapObjects objects = map.getLayers().get("collision").getObjects();
+        MapObjects objects = map.getLayers().get(name).getObjects();
         Array<Body> bodies = new Array<Body>();
         for(MapObject object : objects) {
 
@@ -45,7 +45,7 @@ public class MapBodyMaker {
             BodyDef bd = new BodyDef();
             bd.type = BodyDef.BodyType.StaticBody;
             Body body = world.createBody(bd);
-            body.createFixture(shape, 1);
+            body.createFixture(shape, 1).setUserData(data);
 
             bodies.add(body);
 
@@ -101,6 +101,7 @@ public class MapBodyMaker {
 
         ChainShape chain = new ChainShape();
         chain.createChain(worldVertices);
+
         return chain;
     }
 }

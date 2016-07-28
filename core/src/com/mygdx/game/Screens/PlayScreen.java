@@ -60,7 +60,9 @@ public class PlayScreen implements Screen {
         mWorld.setContactListener(mContactListener);
         mDebugRenderer = new Box2DDebugRenderer();
         mMapMaker = new MapBodyMaker();
-        mMapMaker.buildShapes(mMap, Platformer.PPM, mWorld);
+        mMapMaker.buildShapes(mMap, Platformer.PPM, mWorld, "ground", "ground");
+        mMapMaker.buildShapes(mMap, Platformer.PPM, mWorld, "slopes", "slopes");
+
     }
 
     public void update(float deltaTime){
