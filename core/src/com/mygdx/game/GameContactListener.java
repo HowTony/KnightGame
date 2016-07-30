@@ -20,6 +20,9 @@ public class GameContactListener implements ContactListener{
         Fixture fb = contact.getFixtureA();
         Fixture fa = contact.getFixtureB();
 
+
+
+
         if(fa.getUserData().equals("foot1") || fb.getUserData().equals("foot1")) {
             if (fa.getUserData().equals("ground") || fb.getUserData().equals("ground")) {
                 mInputs.getPlayer().setFoot1OnGround(true);
@@ -65,14 +68,14 @@ public class GameContactListener implements ContactListener{
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
         if(mOnSlope) {
-            contact.setFriction(-.00001f);
+            contact.setFriction(.05f);
         }
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
         if(!mOnSlope) {
-            contact.setFriction(.7f);
+            contact.setFriction(.8f);
         }
     }
 }

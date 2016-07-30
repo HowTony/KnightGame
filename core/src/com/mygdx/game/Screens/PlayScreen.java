@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -42,6 +43,9 @@ public class PlayScreen implements Screen {
     private GameContactListener mContactListener;
     private InputHandler mInputs;
 
+
+    private Vector3 mMousePos = new Vector3();
+
     public PlayScreen(Platformer game, SpriteBatch batch){
         this.mGame = game;
         mBatch = batch;
@@ -53,8 +57,8 @@ public class PlayScreen implements Screen {
         mRenderer = new OrthogonalTiledMapRenderer(mMap, 1/ Platformer.PPM);
         mGameCam.position.set(mGamePort.getWorldWidth() / 2, mGamePort.getWorldHeight() / 2, 0);
 
-        mWorld = new World(new Vector2( 0, -9.8f), true);
-        mPlayer = new Player(mWorld);
+        mWorld = new World(new Vector2( 0, -9f), true);
+        mPlayer = new Player(mWorld, mMousePos);
         mInputs = new InputHandler(mPlayer);
         mContactListener = new GameContactListener(mInputs);
         mWorld.setContactListener(mContactListener);
@@ -69,18 +73,20 @@ public class PlayScreen implements Screen {
         mInputs.update(deltaTime);
         mWorld.step(1/60f, 6, 1);
 
-        mGameCam.position.x = mPlayer.getmBody().getPosition().x;
+        mGameCam.position.x = mPlayer.getBody().getPosition().x;
         //mGameCam.position.y = mPlayer.getmBody().getPosition().y;
         mPlayer.update(deltaTime);
 
-        if(mPlayer.getmBody().getPosition().y > 8){
-            mGameCam.position.y = mPlayer.getmBody().getPosition().y;
-        }else if(mPlayer.getmBody().getPosition().y < 8){
+        if(mPlayer.getBody().getPosition().y > 8){
+            mGameCam.position.y = mPlayer.getBody().getPosition().y;
+        }else if(mPlayer.getBody().getPosition().y < 8){
             //TODO
             //fix camera snap speed
             mGameCam.position.set(mGameCam.position.x, mGamePort.getWorldHeight() / 2, 0);
         }
         mGameCam.update();
+        mMousePos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        mGameCam.unproject(mMousePos);
         mRenderer.setView(mGameCam);
     }
 
@@ -100,7 +106,7 @@ public class PlayScreen implements Screen {
         mBatch.begin();
         mPlayer.draw(mBatch);
         mBatch.end();
-       mDebugRenderer.render(mWorld, mGameCam.combined);
+        mDebugRenderer.render(mWorld, mGameCam.combined);
     }
 
     @Override

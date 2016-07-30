@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="240" height="18" tilewidth="64" tileheight="64" nextobjectid="79">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="240" height="18" tilewidth="64" tileheight="64" nextobjectid="82">
  <tileset firstgid="1" name="tilesheet_complete" tilewidth="64" tileheight="64" tilecount="264" columns="22">
   <image source="tilesheet_complete.png" width="1408" height="768"/>
  </tileset>
  <layer name="land" width="240" height="18">
   <data encoding="base64" compression="zlib">
    eJztl8FNwzAUQD/iBhuAkComgAvizhUYApYonIGKFYADbACcYAQO7BBgB+DIt5qI6DexnUDjpn1PeoraOK4b6SmOCAAAAAAAAAAAAAAAAAAAQD/ZUXdTLwIAGpOpL8a3lAsCgCgy9VPdM34JDQPMMplUtzsPDQ9SLwB6yWluDMN87ElgXHF+2GAd++qB53wm/nb72PCaumxcT7oimFWe1Gfz3Y06yr1Vz9VLc3RelMaNKq5x3tWMseMdHzL5/hoypt0+Neza3VKXjNtCwxDGtfso4/Ye5LfDaeuI7fAv2obds/2w4T1aUVcbXlO+to66dml48ThrcU253a51dNFv0bB7dr+W/M59L92PDZncx05TX7s0vFhcmc9HMn7vPK4Zb9stnr3XMn/9hiwItZTKUMObnnOxuDna7DEG//DbTeapGuf7/7Hzxsxl8e2tms59nx/r3lGtqZ679Nu+4S73Bti9PzIuszc=
-  </data>
- </layer>
- <layer name="background" width="240" height="18">
-  <data encoding="base64" compression="zlib">
-   eJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAADArwFDgAAB
   </data>
  </layer>
  <objectgroup name="ground">
@@ -27,9 +22,6 @@
   <object id="61" x="5152" y="959" width="1759" height="55"/>
   <object id="62" x="7104" y="768" width="255" height="51"/>
   <object id="63" x="7681" y="1089" width="7676" height="61"/>
-  <object id="72" x="68" y="806" width="48" height="220"/>
-  <object id="76" x="194" y="663" width="28" height="280"/>
-  <object id="78" x="79" y="506" width="26" height="188"/>
  </objectgroup>
  <objectgroup name="slopes">
   <object id="46" x="702" y="1092">

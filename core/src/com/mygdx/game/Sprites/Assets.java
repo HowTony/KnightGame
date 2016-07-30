@@ -20,6 +20,9 @@ public class Assets {
 
     private TextureRegion[] mAlienRun = new TextureRegion[12];
     private TextureRegion[] mAlienWalk = new TextureRegion[12];
+    private TextureRegion[] mEmpty = new TextureRegion[12];
+
+    private TextureRegion mArmGun = new TextureRegion();
 
     private Animation mAlienWalkingAnimation;
     private Animation mAlienStandingAnimation;
@@ -30,11 +33,12 @@ public class Assets {
     private Animation mAlienDeathAnimation;
     private Animation mAlienCrouchAnimation;
     private Animation mAlienShootAnimation;
+    private Animation mEmptyAnimation;
 
 
 
    public void load(){
-       mSpriteSheet = loadTexture("alien_sprite.png");
+       mSpriteSheet = loadTexture("alien_sprite1.png");
 
        int yLocation = 0;
        int xLocation = 1;
@@ -91,16 +95,20 @@ public class Assets {
            mAlienWalk[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
            xLocation += 128;
        }
+       yLocation += 128;
+       xLocation = 0;
+       mArmGun = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
 
-       mAlienWalkingAnimation = new Animation(0.08f, mAlienWalk);
-       mAlienRunningAnimation = new Animation(0.08f, mAlienRun);
+       mAlienWalkingAnimation = new Animation(0.1f, mAlienWalk);
+       mAlienRunningAnimation = new Animation(0.1f, mAlienRun);
        mAlienStandingAnimation = new Animation(0.6f, mAlienStand);
-       mAlienJumpAnimation = new Animation(0.05f, mAlienJump);
+       mAlienJumpAnimation = new Animation(0.08f, mAlienJump);
        mAlienFallingAnimation = new Animation(0.2f, mAlienFall);
        mAlienLandingAnimation = new Animation(0.1f, mAlienLand);
-       mAlienDeathAnimation = new Animation(0.08f, mAlienDeath);
+       mAlienDeathAnimation = new Animation(0.1f, mAlienDeath);
        mAlienCrouchAnimation = new Animation(0.08f, mAlienCrouch);
        mAlienShootAnimation = new Animation(0.08f, mAlienShoot);
+       mEmptyAnimation = new Animation(0.08f, mEmpty);
    }
 
     public Animation getWalkingAnimation(){
@@ -136,6 +144,14 @@ public class Assets {
     }
     public Animation getAlienLandingAnimation(){
         return this.mAlienLandingAnimation;
+    }
+
+    public Animation getEmptyAnimation(){
+        return mEmptyAnimation;
+    }
+
+    public TextureRegion getArmGun(){
+        return this.mArmGun;
     }
 
     public Texture loadTexture(String file){
