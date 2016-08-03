@@ -46,6 +46,7 @@ public class Player extends Sprite {
     private boolean mPlayerOnGround;
     private boolean mFoot1OnGround = false;
     private boolean mFoot2OnGround = false;
+    private boolean mFacingRight = true;
 
 
     final short CATEGORY_PLAYER = 0x0001;
@@ -98,29 +99,31 @@ public class Player extends Sprite {
         mBody.createFixture(fixtureDef).setUserData("foot2");
 
         //create gun arm
-        bodyDef.position.set(mBody.getPosition().x,mBody.getPosition().y);
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        mArm = mWorld.createBody(bodyDef);
-        PolygonShape arm = new PolygonShape();
-        arm.setAsBox(.15f, .05f);
-        fixtureDef.shape = arm;
-        fixtureDef.filter.groupIndex = CATEGORY_PLAYER;
-        mArm.createFixture(fixtureDef).setUserData("arm");
-        RevoluteJointDef armJoint = new RevoluteJointDef();
-        armJoint.bodyA = mBody;
-        armJoint.bodyB = mArm;
-        armJoint.collideConnected = false;
-
-        armJoint.localAnchorA.set(-.05f, .05f);
-        armJoint.localAnchorB.set( -.13f, 0);
-
-        armJoint.enableMotor = true;
-        armJoint.motorSpeed = .5f;
-        armJoint.maxMotorTorque = .1f;
-
-        armJoint.enableLimit = true;
-        mWorld.createJoint(armJoint);
-        mBody.setBullet(true);
+//        bodyDef.position.set(mBody.getPosition().x,mBody.getPosition().y);
+//        bodyDef.type = BodyDef.BodyType.DynamicBody;
+//        mArm = mWorld.createBody(bodyDef);
+//        PolygonShape arm = new PolygonShape();
+//        arm.setAsBox(.15f, .05f);
+//        fixtureDef.shape = arm;
+//        fixtureDef.filter.groupIndex = CATEGORY_PLAYER;
+//
+//        fixtureDef.density = -1;
+//        mArm.createFixture(fixtureDef).setUserData("arm");
+//        RevoluteJointDef armJoint = new RevoluteJointDef();
+//        armJoint.bodyA = mBody;
+//        armJoint.bodyB = mArm;
+//        armJoint.collideConnected = false;
+//
+//        armJoint.localAnchorA.set(-.05f, .05f);
+//        armJoint.localAnchorB.set( -.13f, 0);
+//
+//        armJoint.enableMotor = true;
+//        armJoint.motorSpeed = .5f;
+//        armJoint.maxMotorTorque = .1f;
+//
+//        armJoint.enableLimit = true;
+//        mWorld.createJoint(armJoint);
+//        mBody.setBullet(true);
 
         shape.dispose();
     }
@@ -143,21 +146,17 @@ public class Player extends Sprite {
     }
 
     public void armUpdate(){
-        Vector2 aimDirection = new Vector2(mMousePos.x - mBody.getPosition().x, mMousePos.y - mBody.getPosition().y);
-        Vector2 xAxis = new Vector2(1,0);
-        float angle = MathUtils.atan2(aimDirection.y, aimDirection.x) - MathUtils.atan2(xAxis.y, xAxis.x);
-        mCorrectAngle = angle * MathUtils.radiansToDegrees;
-        mArmCurrentAngle = mArm.getAngle() * MathUtils.radiansToDegrees;
-        if(mArmCurrentAngle != mCorrectAngle) {
-            if (mArmCurrentAngle < mCorrectAngle) {
-                mArm.setAngularVelocity(1f);
-            }
-            if (mArmCurrentAngle > mCorrectAngle) {
-                mArm.setAngularVelocity(-1f);
-            }
+        if(mFacingRight) {
+            Vector2 aimDirection = new Vector2(mMousePos.x - mBody.getPosition().x, mMousePos.y - mBody.getPosition().y);
+            Vector2 xAxis = new Vector2(1, 0);
+            float angle = MathUtils.atan2(aimDirection.y, aimDirection.x) - MathUtils.atan2(xAxis.y, xAxis.x);
+            mCorrectAngle = angle * MathUtils.radiansToDegrees;
+        }else{
+            Vector2 aimDirection = new Vector2(mMousePos.x - mBody.getPosition().x, mMousePos.y - mBody.getPosition().y);
+            Vector2 xAxis = new Vector2(1, 0);
+            float angle = MathUtils.atan2(aimDirection.y, aimDirection.x) - MathUtils.atan2(xAxis.y, xAxis.x);
+            mCorrectAngle = angle * MathUtils.radiansToDegrees;
         }
-
-
 
     }
 
@@ -176,17 +175,26 @@ public class Player extends Sprite {
 
     public void draw(SpriteBatch batch){
         batch.draw(mCurrentPlayerFrame, getX() - mSpriteXCenter, getY() - mSpriteYCenter, mPlayerWidth , mPlayerHeight);
-        batch.draw(mGameAssets.getArmGun(), (getX() - mSpriteXCenter) +.03f, (getY() - mSpriteYCenter) - .05f, mArmOriginX , mArmOriginY, mPlayerWidth, mPlayerHeight, 1,1,mArmCurrentAngle);
-        System.out.println(mArm.getPosition());
+        if(mPlayerOnGround) {
+            if(!mFacingRight) {
+                batch.draw(mGameAssets.getArmGun(), (getX() - mSpriteXCenter) - .07f, (getY() - mSpriteYCenter) - .05f, mArmOriginX, mArmOriginY, mPlayerWidth, mPlayerHeight, 1, 1, mCorrectAngle);
+            }else{
+                batch.draw(mGameAssets.getArmGun(), (getX() - mSpriteXCenter) + .07f, (getY() - mSpriteYCenter) - .05f, mArmOriginX, mArmOriginY, mPlayerWidth, mPlayerHeight, 1, 1, mCorrectAngle);
+            }
+        }
     }
 
     public void reverseSpriteDirection(boolean b){
         if(b){
+            mFacingRight = false;
             mPlayerWidth = -1;
             mSpriteXCenter = -.48f;
+            mArmOriginX = -.36f;
         }else{
+            mFacingRight = true;
             mPlayerWidth = 1;
             mSpriteXCenter = .48f;
+            mArmOriginX = .36f;
         }
     }
 

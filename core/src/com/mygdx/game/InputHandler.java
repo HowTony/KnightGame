@@ -23,23 +23,20 @@ public class InputHandler {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if (mPlayer.isPlayerOnGround()) {
                 mPlayer.getBody().applyLinearImpulse(new Vector2(0, 6f), mPlayer.getBody().getWorldCenter(), true);
-                mPlayer.getArm().applyLinearImpulse(new Vector2(0, 6f), mPlayer.getArm().getWorldCenter(), true);
                 mPlayer.setFoot2OnGround(false);
                 mPlayer.setFoot1OnGround(false);
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 
-            if (mPlayer.getBody().getLinearVelocity().x <= 3.5f && mPlayer.getArm().getLinearVelocity().x <= 4f) {
+            if (mPlayer.getBody().getLinearVelocity().x <= 3.5f) {
                 mPlayer.getBody().applyLinearImpulse(new Vector2(.18f, 0), mPlayer.getBody().getWorldCenter(), true);
-                mPlayer.getArm().applyLinearImpulse(new Vector2(.18f, 0), mPlayer.getArm().getWorldCenter(), true);
                 mPlayer.reverseSpriteDirection(false);
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (mPlayer.getBody().getLinearVelocity().x >= -3.5f && mPlayer.getArm().getLinearVelocity().x >= -4f) {
+            if (mPlayer.getBody().getLinearVelocity().x >= -3.5f) {
                 mPlayer.getBody().applyLinearImpulse(new Vector2(-.18f, 0), mPlayer.getBody().getWorldCenter(), true);
-                mPlayer.getArm().applyLinearImpulse(new Vector2(-.18f, 0), mPlayer.getArm().getWorldCenter(), true);
                 mPlayer.reverseSpriteDirection(true);
             }
         }

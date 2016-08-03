@@ -38,7 +38,7 @@ public class Assets {
 
 
    public void load(){
-       mSpriteSheet = loadTexture("alien_sprite1.png");
+       mSpriteSheet = loadTexture("alien_sprite_NOARMS.png");
 
        int yLocation = 0;
        int xLocation = 1;
