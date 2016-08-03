@@ -22,7 +22,8 @@ public class Assets {
     private TextureRegion[] mAlienWalk = new TextureRegion[12];
     private TextureRegion[] mEmpty = new TextureRegion[12];
 
-    private TextureRegion mArmGun = new TextureRegion();
+    private TextureRegion mArmGunRIGHT = new TextureRegion();
+    private TextureRegion mArmGunLEFT = new TextureRegion();
 
     private Animation mAlienWalkingAnimation;
     private Animation mAlienStandingAnimation;
@@ -97,7 +98,9 @@ public class Assets {
        }
        yLocation += 128;
        xLocation = 0;
-       mArmGun = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+       mArmGunRIGHT = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+       xLocation += 128;
+       mArmGunLEFT = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
 
        mAlienWalkingAnimation = new Animation(0.1f, mAlienWalk);
        mAlienRunningAnimation = new Animation(0.1f, mAlienRun);
@@ -150,8 +153,12 @@ public class Assets {
         return mEmptyAnimation;
     }
 
-    public TextureRegion getArmGun(){
-        return this.mArmGun;
+    public TextureRegion getArmGunRIGHT(){
+        return this.mArmGunRIGHT;
+    }
+
+    public TextureRegion getArmGunLEFT(){
+        return this.mArmGunLEFT;
     }
 
     public Texture loadTexture(String file){
