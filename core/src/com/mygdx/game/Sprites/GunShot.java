@@ -1,7 +1,7 @@
 package com.mygdx.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.*;
 
 /**
@@ -13,6 +13,7 @@ public class GunShot {
     private World mWorld;
     private Player mPlayer;
     final short CATEGORY_PLAYER = 0x0001;
+    float mTimeAlive = 0;
 
     public GunShot(Player player){
         mPlayer = player;
@@ -27,8 +28,8 @@ public class GunShot {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         mBullet = mWorld.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(.05f);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(.06f, .06f);
         fixtureDef.shape = shape;
         fixtureDef.filter.groupIndex = CATEGORY_PLAYER;
         fixtureDef.density = .1f;
@@ -44,18 +45,21 @@ public class GunShot {
 
 
     public void update(float deltaTime){
-
-
-
+        mTimeAlive += deltaTime;
     }
 
-    public void render(){
+    public void render(Batch sb){
+        sb.draw(mPlayer.getGameAssets().getDucky(),mBullet.getPosition().x - .54f , mBullet.getPosition().y - .46f, 1, 1);
 
     }
 
     public void shoot(){
-            mBullet.applyLinearImpulse(mPlayer.getAimDirection().x /500 , mPlayer.getAimDirection().y /500, Gdx.input.getX(), Gdx.input.getY(), false);
+            mBullet.applyLinearImpulse(mPlayer.getAimDirection().x /500 , mPlayer.getAimDirection().y /400, Gdx.input.getX(), Gdx.input.getY(), false);
 
+    }
+
+    public float getTimeAlive(){
+        return mTimeAlive;
     }
 
 

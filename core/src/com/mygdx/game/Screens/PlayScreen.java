@@ -70,7 +70,6 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float deltaTime){
-        mInputs.update(deltaTime);
         mWorld.step(1/60f, 6, 1);
 
         mGameCam.position.x = mPlayer.getBody().getPosition().x;
@@ -96,15 +95,18 @@ public class PlayScreen implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float deltaTime) {
         Gdx.gl.glClearColor(.3f,.3f,.9f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        update(delta);
+        update(deltaTime);
+
         mRenderer.render();
-        mHud.getmStage().draw();
+
+        //mHud.getmStage().draw();
         mBatch.setProjectionMatrix(mGameCam.combined);
         mBatch.begin();
         mPlayer.draw(mBatch);
+        mInputs.update(deltaTime, mBatch);
         mBatch.end();
         mDebugRenderer.render(mWorld, mGameCam.combined);
     }

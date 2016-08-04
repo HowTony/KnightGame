@@ -249,4 +249,8 @@ public class Player extends Sprite {
         return mFoot2OnGround;
     }
 
+    public Assets getGameAssets(){
+        return mGameAssets;
+    }
+
 }

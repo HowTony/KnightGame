@@ -1,6 +1,7 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 import com.mygdx.game.Sprites.GunShot;
@@ -52,9 +53,10 @@ public class InputHandler {
         return this.mPlayer;
     }
 
-    public void update(float deltatime) {
+    public void update(float deltatime, Batch sb) {
         handleInput(deltatime);
         mShoot.update(deltatime);
+        mShoot.render(sb);
     }
 
 
