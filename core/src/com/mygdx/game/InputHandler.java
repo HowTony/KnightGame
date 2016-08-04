@@ -3,20 +3,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 
+import com.mygdx.game.Sprites.GunShot;
 import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.Sprites.ShotManager;
 
 /**
  * Created by Tony Howarth on 7/19/2016.
  */
 public class InputHandler {
     private Player mPlayer;
+    private ShotManager mShoot;
 
     public InputHandler(Player player) {
         mPlayer = player;
-    }
-
-    public void update(float deltatime) {
-        handleInput(deltatime);
+        mShoot = new ShotManager(mPlayer);
     }
 
     public void handleInput(float deltaTime) {
@@ -40,9 +40,22 @@ public class InputHandler {
                 mPlayer.reverseSpriteDirection(true);
             }
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
+            if(mPlayer.isPlayerOnGround()) {
+                mShoot.addBullets();
+            }
+
+        }
     }
 
     public Player getPlayer(){
         return this.mPlayer;
     }
+
+    public void update(float deltatime) {
+        handleInput(deltatime);
+        mShoot.update(deltatime);
+    }
+
+
 }

@@ -106,7 +106,7 @@ public class PlayScreen implements Screen {
         mBatch.begin();
         mPlayer.draw(mBatch);
         mBatch.end();
-        //mDebugRenderer.render(mWorld, mGameCam.combined);
+        mDebugRenderer.render(mWorld, mGameCam.combined);
     }
 
     @Override

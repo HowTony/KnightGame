@@ -54,7 +54,8 @@ public class Player extends Sprite {
 
     final short CATEGORY_PLAYER = 0x0001;
 
-    Vector3 mMousePos;
+    private Vector2 mAimDirection;
+    private Vector3 mMousePos;
 
     public Player(World world, Vector3 mouseLoc){
         this.mWorld = world;
@@ -118,9 +119,9 @@ public class Player extends Sprite {
     }
 
     public void armUpdate(){
-        Vector2 aimDirection = new Vector2(mMousePos.x - mBody.getPosition().x, mMousePos.y - mBody.getPosition().y);
+        mAimDirection = new Vector2(mMousePos.x - mBody.getPosition().x, mMousePos.y - mBody.getPosition().y);
         Vector2 xAxis = new Vector2(1, 0);
-        float angle = MathUtils.atan2(aimDirection.y, aimDirection.x) - MathUtils.atan2(xAxis.y, xAxis.x);
+        float angle = MathUtils.atan2(mAimDirection.y, mAimDirection.x) - MathUtils.atan2(xAxis.y, xAxis.x);
         mCorrectAngle = angle * MathUtils.radiansToDegrees;
     }
 
@@ -130,6 +131,14 @@ public class Player extends Sprite {
 
     public Body getBody(){
         return this.mBody;
+    }
+
+    public Vector2 getAimDirection(){
+        return mAimDirection;
+    }
+
+    public World getWorld(){
+        return mWorld;
     }
 
     public void draw(SpriteBatch batch){
@@ -152,6 +161,22 @@ public class Player extends Sprite {
             mFacingRight = true;
             mPlayerWidth = 1;
             mSpriteXCenter = .48f;
+        }
+    }
+
+
+
+    public Vector2 getBulletOrigin(){
+        Vector2 bulletOrigin;
+        Vector2 normalAimDir = new Vector2(mAimDirection);
+        normalAimDir = normalAimDir.nor();
+        float gunLength = .4f;
+        if(!mFacingRight) {
+            bulletOrigin = new Vector2(((getX()) + .085f ) + normalAimDir.x * gunLength, ((getY() + .059f )) + normalAimDir.y * gunLength );
+            return bulletOrigin;
+        }else{
+            bulletOrigin = new Vector2(((getX()) - .085f ) + normalAimDir.x * gunLength, ((getY() + .059f )) + normalAimDir.y * gunLength );
+            return bulletOrigin;
         }
     }
 
