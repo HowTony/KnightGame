@@ -14,6 +14,7 @@ import com.mygdx.game.Sprites.ShotManager;
 public class InputHandler {
     private Player mPlayer;
     private ShotManager mShoot;
+    private boolean mCanShoot;
 
     public InputHandler(Player player) {
         mPlayer = player;
@@ -41,11 +42,13 @@ public class InputHandler {
                 mPlayer.reverseSpriteDirection(true);
             }
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
-            if(mPlayer.isPlayerOnGround()) {
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            if(mPlayer.isPlayerOnGround() && mCanShoot) {
                 mShoot.addBullets();
+                mCanShoot = false;
             }
-
+        }else{
+            mCanShoot = true;
         }
     }
 
