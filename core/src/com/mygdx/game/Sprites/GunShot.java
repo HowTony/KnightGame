@@ -12,8 +12,9 @@ public class GunShot {
     private Body mBullet;
     private World mWorld;
     private Player mPlayer;
-    final short CATEGORY_PLAYER = 0x0001;
-    float mTimeAlive = 0;
+    private final short CATEGORY_PLAYER = 0x0001;
+    private float mTimeAlive = 0;
+    private boolean mIsDead = false;
 
     public GunShot(Player player){
         mPlayer = player;
@@ -26,6 +27,7 @@ public class GunShot {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(mPlayer.getBulletOrigin().x, mPlayer.getBulletOrigin().y);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.gravityScale = .9f;
         mBullet = mWorld.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -33,8 +35,10 @@ public class GunShot {
         fixtureDef.shape = shape;
         fixtureDef.filter.groupIndex = CATEGORY_PLAYER;
         fixtureDef.density = .1f;
+
         mBullet.createFixture(fixtureDef).setUserData("player");
         mBullet.isBullet();
+
 
         shape.dispose();
     }
@@ -60,6 +64,14 @@ public class GunShot {
 
     public float getTimeAlive(){
         return mTimeAlive;
+    }
+
+    public void setIsDead(boolean b){
+        mIsDead = b;
+    }
+
+    public boolean isDead(){
+        return mIsDead;
     }
 
 

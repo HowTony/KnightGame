@@ -1,8 +1,7 @@
 package com.mygdx.game.Sprites;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -24,14 +23,15 @@ public class ShotManager {
     }
 
     public void update(float deltaTime){
-        //Array<GunShot> removableShots = new Array<GunShot>();
+        Array<GunShot> removableShots = new Array<GunShot>();
         for(GunShot eachShot : mBullets){
             eachShot.update(deltaTime);
-//            if(eachShot.getTimeAlive() > 4){
-//                removableShots.add(eachShot);
-//            }
+            if(eachShot.getTimeAlive() > 5){
+                eachShot.getBody().setActive(false);
+                removableShots.add(eachShot);
+            }
         }
-        //removeOldShots(removableShots);
+        removeOldShots(removableShots);
     }
 
     public void removeOldShots(Array<GunShot> itemsToRemove){

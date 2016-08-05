@@ -16,10 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.GameContactListener;
-import com.mygdx.game.InputHandler;
-import com.mygdx.game.MapBodyMaker;
-import com.mygdx.game.Platformer;
+import com.mygdx.game.*;
 import com.mygdx.game.Scenes.HUD;
 import com.mygdx.game.Sprites.Assets;
 import com.mygdx.game.Sprites.Player;
@@ -42,8 +39,7 @@ public class PlayScreen implements Screen {
     private Player mPlayer;
     private GameContactListener mContactListener;
     private InputHandler mInputs;
-
-
+    private BodyRemover mBodyRemoval;
     private Vector3 mMousePos = new Vector3();
 
     public PlayScreen(Platformer game, SpriteBatch batch){
@@ -57,21 +53,21 @@ public class PlayScreen implements Screen {
         mRenderer = new OrthogonalTiledMapRenderer(mMap, 1/ Platformer.PPM);
         mGameCam.position.set(mGamePort.getWorldWidth() / 2, mGamePort.getWorldHeight() / 2, 0);
 
-        mWorld = new World(new Vector2( 0, -9f), true);
+        mWorld = new World(new Vector2( 0, -9.81f), true);
         mPlayer = new Player(mWorld, mMousePos);
         mInputs = new InputHandler(mPlayer);
         mContactListener = new GameContactListener(mInputs);
         mWorld.setContactListener(mContactListener);
+        mBodyRemoval = new BodyRemover(mWorld);
         mDebugRenderer = new Box2DDebugRenderer();
         mMapMaker = new MapBodyMaker();
         mMapMaker.buildShapes(mMap, Platformer.PPM, mWorld, "ground", "ground");
         mMapMaker.buildShapes(mMap, Platformer.PPM, mWorld, "slopes", "slopes");
-
     }
 
     public void update(float deltaTime){
         mWorld.step(1/60f, 6, 1);
-
+        mBodyRemoval.update(deltaTime);
         mGameCam.position.x = mPlayer.getBody().getPosition().x;
         //mGameCam.position.y = mPlayer.getmBody().getPosition().y;
         mPlayer.update(deltaTime);
@@ -87,6 +83,7 @@ public class PlayScreen implements Screen {
         mMousePos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         mGameCam.unproject(mMousePos);
         mRenderer.setView(mGameCam);
+
     }
 
     @Override
@@ -99,16 +96,14 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(.3f,.3f,.9f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         update(deltaTime);
-
         mRenderer.render();
-
         //mHud.getmStage().draw();
         mBatch.setProjectionMatrix(mGameCam.combined);
         mBatch.begin();
         mPlayer.draw(mBatch);
         mInputs.update(deltaTime, mBatch);
         mBatch.end();
-//        mDebugRenderer.render(mWorld, mGameCam.combined);
+        //mDebugRenderer.render(mWorld, mGameCam.combined);
     }
 
     @Override

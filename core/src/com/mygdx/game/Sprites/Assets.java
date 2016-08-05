@@ -59,8 +59,6 @@ public class Assets {
            mAlienStand[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
            xLocation += 128;
        }
-
-
        yLocation += 128;
        xLocation = 0;
 

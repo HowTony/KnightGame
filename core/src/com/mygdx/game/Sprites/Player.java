@@ -50,6 +50,7 @@ public class Player extends Sprite {
     private boolean mFoot1OnGround = false;
     private boolean mFoot2OnGround = false;
     private boolean mFacingRight = true;
+    private boolean mIsDead = false;
 
 
     final short CATEGORY_PLAYER = 0x0001;
@@ -251,6 +252,14 @@ public class Player extends Sprite {
 
     public Assets getGameAssets(){
         return mGameAssets;
+    }
+
+    public void setIsDead(boolean b){
+        mIsDead = b;
+    }
+
+    public boolean isDead(){
+        return mIsDead;
     }
 
 }
