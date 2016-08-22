@@ -19,12 +19,15 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
 import com.mygdx.game.Scenes.HUD;
 import com.mygdx.game.Sprites.Assets;
+import com.mygdx.game.Sprites.EnemyManager;
 import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.Sprites.ShotManager;
 
 /**
  * Created by Tony Howarth on 6/23/2016.
  */
 public class PlayScreen implements Screen {
+    private boolean mDebugging = false;
     private Game mGame;
     private SpriteBatch mBatch;
     private OrthographicCamera mGameCam;
@@ -40,6 +43,8 @@ public class PlayScreen implements Screen {
     private GameContactListener mContactListener;
     private InputHandler mInputs;
     private BodyRemover mBodyRemoval;
+    private EnemyManager mEnemies;
+    private ShotManager mShots;
     private Vector3 mMousePos = new Vector3();
 
     public PlayScreen(Platformer game, SpriteBatch batch){
@@ -55,8 +60,11 @@ public class PlayScreen implements Screen {
 
         mWorld = new World(new Vector2( 0, -9.81f), true);
         mPlayer = new Player(mWorld, mMousePos);
-        mInputs = new InputHandler(mPlayer);
-        mContactListener = new GameContactListener(mInputs);
+        mEnemies = new EnemyManager(mWorld, mPlayer);
+        mShots = new ShotManager(mPlayer);
+        mInputs = new InputHandler(mPlayer, mShots);
+        mContactListener = new GameContactListener(mInputs, mEnemies, mShots);
+
         mWorld.setContactListener(mContactListener);
         mBodyRemoval = new BodyRemover(mWorld);
         mDebugRenderer = new Box2DDebugRenderer();
@@ -71,6 +79,7 @@ public class PlayScreen implements Screen {
         mGameCam.position.x = mPlayer.getBody().getPosition().x;
         //mGameCam.position.y = mPlayer.getmBody().getPosition().y;
         mPlayer.update(deltaTime);
+        mEnemies.update(deltaTime);
 
         if(mPlayer.getBody().getPosition().y > 8){
             mGameCam.position.y = mPlayer.getBody().getPosition().y;
@@ -97,13 +106,17 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         update(deltaTime);
         mRenderer.render();
-        //mHud.getmStage().draw();
+        mHud.getmStage().draw();
         mBatch.setProjectionMatrix(mGameCam.combined);
         mBatch.begin();
-        mPlayer.draw(mBatch);
+        mPlayer.render(mBatch);
+        mEnemies.render(mBatch);
         mInputs.update(deltaTime, mBatch);
+        mHud.render(deltaTime, mBatch);
         mBatch.end();
-        //mDebugRenderer.render(mWorld, mGameCam.combined);
+        if(mDebugging) {
+            mDebugRenderer.render(mWorld, mGameCam.combined);
+        }
     }
 
     @Override

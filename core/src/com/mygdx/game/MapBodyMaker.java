@@ -19,13 +19,10 @@ public class MapBodyMaker {
         MapObjects objects = map.getLayers().get(name).getObjects();
         Array<Body> bodies = new Array<Body>();
         for(MapObject object : objects) {
-
             if (object instanceof TextureMapObject) {
                 continue;
             }
-
             Shape shape;
-
             if (object instanceof RectangleMapObject) {
                 shape = getRectangle((RectangleMapObject)object);
             }
@@ -46,9 +43,7 @@ public class MapBodyMaker {
             bd.type = BodyDef.BodyType.StaticBody;
             Body body = world.createBody(bd);
             body.createFixture(shape, 1).setUserData(data);
-
             bodies.add(body);
-
             shape.dispose();
         }
         return bodies;
@@ -81,7 +76,6 @@ public class MapBodyMaker {
         float[] worldVertices = new float[vertices.length];
 
         for (int i = 0; i < vertices.length; ++i) {
-            System.out.println(vertices[i]);
             worldVertices[i] = vertices[i] / ppt;
         }
 

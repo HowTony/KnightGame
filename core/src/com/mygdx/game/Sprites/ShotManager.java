@@ -26,7 +26,7 @@ public class ShotManager {
         Array<GunShot> removableShots = new Array<GunShot>();
         for(GunShot eachShot : mBullets){
             eachShot.update(deltaTime);
-            if(eachShot.getTimeAlive() > 5){
+            if(eachShot.isDead()){
                 eachShot.getBody().setActive(false);
                 removableShots.add(eachShot);
             }
@@ -42,6 +42,17 @@ public class ShotManager {
         for(GunShot eachShot : mBullets){
             eachShot.render(sb);
         }
+    }
+
+
+    public GunShot getShot(String name) {
+        GunShot someShot = mBullets.get(0);
+        for (int i = 0; i < mBullets.size; i++) {
+            if (mBullets.get(i).getBody().getFixtureList().get(0).toString().contains(name)) {
+                someShot = mBullets.get(i);
+            }
+        }
+        return someShot;
     }
 
 

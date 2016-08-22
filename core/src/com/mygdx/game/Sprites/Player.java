@@ -35,6 +35,8 @@ public class Player extends Sprite {
     private float mLeftArmOriginY = .52f;
     private float mSpriteScaleWidth = 1;
     private float mSpriteScaleHeight = 1;
+    private float mXDisplacement = .0895f;
+    private float mYDisplacement = .0655f;
 
     private Animation mJumpAnime;
     private Animation mFallingAnime;
@@ -51,6 +53,8 @@ public class Player extends Sprite {
     private boolean mFoot2OnGround = false;
     private boolean mFacingRight = true;
     private boolean mIsDead = false;
+
+    private float mCurrentTime;
 
 
     final short CATEGORY_PLAYER = 0x0001;
@@ -81,13 +85,14 @@ public class Player extends Sprite {
     public void definePlayer(){
         // create player rect
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(5,5);
+        bodyDef.position.set(5,2 );
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         mBody = mWorld.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(.15f,.33f);
         fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
         fixtureDef.filter.groupIndex = CATEGORY_PLAYER;
         mBody.createFixture(fixtureDef).setUserData("player");
 
@@ -106,6 +111,15 @@ public class Player extends Sprite {
     }
 
     public void update(float deltaTime){
+        mCurrentTime += deltaTime;
+//        if(mCurrentTime >= 1){
+//            System.out.println(mCorrectAngle);
+//            mCurrentTime = 0;
+//        }
+
+
+
+
         armUpdate();
         if(mFoot1OnGround || mFoot2OnGround){
             setPlayerOnGround(true);
@@ -124,6 +138,20 @@ public class Player extends Sprite {
         Vector2 xAxis = new Vector2(1, 0);
         float angle = MathUtils.atan2(mAimDirection.y, mAimDirection.x) - MathUtils.atan2(xAxis.y, xAxis.x);
         mCorrectAngle = angle * MathUtils.radiansToDegrees;
+//        if(mFacingRight) {
+//            if (mCorrectAngle > 50) {
+//                mCorrectAngle = 50;
+//            } else if (mCorrectAngle < 0) {
+//                mCorrectAngle = 0;
+//            }
+//        }else{
+//            if (mCorrectAngle > -180 && mCorrectAngle < 50) {
+//                mCorrectAngle = -180;
+//            } else if (mCorrectAngle < 135 && mCorrectAngle > 0) {
+//                mCorrectAngle = 135;
+//            }
+//        }
+
     }
 
     public void AnimateSprite(float deltaTime){
@@ -142,7 +170,7 @@ public class Player extends Sprite {
         return mWorld;
     }
 
-    public void draw(SpriteBatch batch){
+    public void render(SpriteBatch batch){
         batch.draw(mCurrentPlayerFrame, getX() - mSpriteXCenter, getY() - mSpriteYCenter, mPlayerWidth , mPlayerHeight);
         if(mPlayerOnGround) {
             if(!mFacingRight) {
@@ -165,18 +193,16 @@ public class Player extends Sprite {
         }
     }
 
-
-
     public Vector2 getBulletOrigin(){
         Vector2 bulletOrigin;
         Vector2 normalAimDir = new Vector2(mAimDirection);
         normalAimDir = normalAimDir.nor();
         float gunLength = .4f;
         if(!mFacingRight) {
-            bulletOrigin = new Vector2(((getX()) + .085f ) + normalAimDir.x * gunLength, ((getY() + .059f )) + normalAimDir.y * gunLength );
+            bulletOrigin = new Vector2(((getX()) + mXDisplacement ) + normalAimDir.x * gunLength, ((getY() + mYDisplacement )) + normalAimDir.y * gunLength );
             return bulletOrigin;
         }else{
-            bulletOrigin = new Vector2(((getX()) - .085f ) + normalAimDir.x * gunLength, ((getY() + .059f )) + normalAimDir.y * gunLength );
+            bulletOrigin = new Vector2(((getX()) - mXDisplacement ) + normalAimDir.x * gunLength, ((getY() + mYDisplacement )) + normalAimDir.y * gunLength );
             return bulletOrigin;
         }
     }

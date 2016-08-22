@@ -14,9 +14,9 @@ public class InputHandler {
     private ShotManager mShoot;
     private boolean mCanShoot;
 
-    public InputHandler(Player player) {
+    public InputHandler(Player player, ShotManager shots) {
         mPlayer = player;
-        mShoot = new ShotManager(mPlayer);
+        mShoot = shots;
     }
 
     public void handleInput(float deltaTime) {

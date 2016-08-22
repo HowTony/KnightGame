@@ -8,38 +8,43 @@
    eJztl8FNwzAUQD/iBhuAkComgAvizhUYApYonIGKFYADbACcYAQO7BBgB+DIt5qI6DexnUDjpn1PeoraOK4b6SmOCAAAAAAAAAAAAAAAAAAAQD/ZUXdTLwIAGpOpL8a3lAsCgCgy9VPdM34JDQPMMplUtzsPDQ9SLwB6yWluDMN87ElgXHF+2GAd++qB53wm/nb72PCaumxcT7oimFWe1Gfz3Y06yr1Vz9VLc3RelMaNKq5x3tWMseMdHzL5/hoypt0+Neza3VKXjNtCwxDGtfso4/Ye5LfDaeuI7fAv2obds/2w4T1aUVcbXlO+to66dml48ThrcU253a51dNFv0bB7dr+W/M59L92PDZncx05TX7s0vFhcmc9HMn7vPK4Zb9stnr3XMn/9hiwItZTKUMObnnOxuDna7DEG//DbTeapGuf7/7Hzxsxl8e2tms59nx/r3lGtqZ679Nu+4S73Bti9PzIuszc=
   </data>
  </layer>
+ <layer name="background" width="240" height="18">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAADArwFDgAAB
+  </data>
+ </layer>
  <objectgroup name="ground">
-  <object id="45" x="63" y="1091" width="640" height="48"/>
-  <object id="47" x="577" y="833" width="125" height="30"/>
-  <object id="50" x="958" y="834" width="159" height="54"/>
-  <object id="51" x="1214" y="834" width="65" height="47"/>
-  <object id="53" x="1345" y="833" width="62" height="45"/>
-  <object id="54" x="1538" y="833" width="412" height="43"/>
-  <object id="55" x="2142" y="834" width="576" height="43"/>
-  <object id="56" x="2848" y="834" width="799" height="50"/>
-  <object id="57" x="3904" y="578" width="255" height="57"/>
-  <object id="58" x="4544" y="961" width="414" height="51"/>
-  <object id="61" x="5152" y="959" width="1759" height="55"/>
-  <object id="62" x="7104" y="768" width="255" height="51"/>
-  <object id="63" x="7681" y="1089" width="7676" height="61"/>
+  <object id="45" x="65" y="1094" width="640" height="48"/>
+  <object id="47" x="579" y="836" width="125" height="30"/>
+  <object id="50" x="960" y="837" width="159" height="54"/>
+  <object id="51" x="1216" y="837" width="65" height="47"/>
+  <object id="53" x="1347" y="836" width="62" height="45"/>
+  <object id="54" x="1540" y="836" width="412" height="43"/>
+  <object id="55" x="2144" y="837" width="576" height="43"/>
+  <object id="56" x="2850" y="837" width="799" height="50"/>
+  <object id="57" x="3906" y="581" width="255" height="57"/>
+  <object id="58" x="4546" y="964" width="414" height="51"/>
+  <object id="61" x="5154" y="962" width="1759" height="55"/>
+  <object id="62" x="7106" y="771" width="255" height="51"/>
+  <object id="63" x="7683" y="1092" width="7676" height="61"/>
  </objectgroup>
  <objectgroup name="slopes">
-  <object id="46" x="702" y="1092">
-   <polygon points="0,0 256,-256 257,-204 2,46"/>
+  <object id="46" x="704" y="1094.7">
+   <polygon points="0,0 256.249,-257.695 257.25,-205.351 2.00195,46.3046"/>
   </object>
-  <object id="48" x="583" y="862">
+  <object id="48" x="585" y="865">
    <polygon points="0,0 57,32 112,2 111,2"/>
   </object>
-  <object id="59" x="3647" y="833">
+  <object id="59" x="3649" y="836">
    <polyline points="0,0 257,-255 258,-199 0,52 0,0"/>
   </object>
-  <object id="60" x="4159" y="577">
+  <object id="60" x="4161" y="580">
    <polyline points="0,0 386,387 385,430 -1,56 -1,2"/>
   </object>
-  <object id="64" x="6910" y="958">
+  <object id="64" x="6912" y="961">
    <polygon points="0,0 195,-191 194,-139 1,57"/>
   </object>
-  <object id="65" x="7358" y="768">
+  <object id="65" x="7360" y="771">
    <polygon points="0,0 324,323 323,378 0,50"/>
   </object>
  </objectgroup>
