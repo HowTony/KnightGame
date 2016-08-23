@@ -44,7 +44,6 @@ public class ShotManager {
         }
     }
 
-
     public GunShot getShot(String name) {
         GunShot someShot = mBullets.get(0);
         for (int i = 0; i < mBullets.size; i++) {
@@ -54,10 +53,4 @@ public class ShotManager {
         }
         return someShot;
     }
-
-
-
-
-
-
 }

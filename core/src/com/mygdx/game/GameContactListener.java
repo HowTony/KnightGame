@@ -30,7 +30,6 @@ public class GameContactListener implements ContactListener {
         Fixture fb = contact.getFixtureA();
         Fixture fa = contact.getFixtureB();
 
-
         //if player and enemy aggro sensor collide then set the enemy to attacking, enemy will chase player
         if (fa.getUserData().toString().contains("aggro") || fb.getUserData().toString().contains("aggro")) {
             if (fa.getUserData().equals("player") || fb.getUserData().equals("player")) {
@@ -38,7 +37,6 @@ public class GameContactListener implements ContactListener {
                 mEnemy.setAttacking(true);
             }
         }
-
 
         //if the shot collides with a sensor then kill the shot
         if (fa.getUserData().toString().contains("shot") || fb.getUserData().toString().contains("shot")) {
@@ -81,22 +79,8 @@ public class GameContactListener implements ContactListener {
     // called when two fixtures no longer collide
     @Override
     public void endContact(Contact contact) {
-//        Fixture fa = contact.getFixtureA();
-//        Fixture fb = contact.getFixtureB();
-//        if(fa.getUserData().equals("foot1") || fb.getUserData().equals("foot1")) {
-//            if (fa.getUserData().equals("ground") || fb.getUserData().equals("ground")) {
-//            }
-//            if (fa.getUserData().equals("slopes") || fb.getUserData().equals("slopes")) {
-//            }
-//        }
-//        if (fa.getUserData().equals("foot2") || fb.getUserData().equals("foot2")) {
-//            if (fa.getUserData().equals("ground") || fb.getUserData().equals("ground")) {
-//            }
-//            if (fa.getUserData().equals("slopes") || fb.getUserData().equals("slopes")) {
-//            }
-//        }
-    }
 
+    }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {

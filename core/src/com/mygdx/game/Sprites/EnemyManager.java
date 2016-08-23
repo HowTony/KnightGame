@@ -16,7 +16,6 @@ public class EnemyManager {
     private Vector2 mSpawnLocation;
     private int ID = 0;
 
-
     public EnemyManager(World world, Player player){
         mWorld = world;
         mPlayer = player;
@@ -26,10 +25,9 @@ public class EnemyManager {
 
     private void addEnemies() {
         mEnemies.add(new Enemies(mWorld, mPlayer, new Vector2(3, 5), false, ID));
-//        for(int i = 0; i < 5; i++) {
-//            mEnemies.add(new Enemies(mWorld, mPlayer, new Vector2(20 + (i * 10), 6), false, ID+i));
-//        }
-
+        for(int i = 0; i < 5; i++) {
+            mEnemies.add(new Enemies(mWorld, mPlayer, new Vector2(20 + (i * 10), 6), false, ID+i));
+        }
     }
 
     public void update(float deltaTime){
@@ -44,8 +42,6 @@ public class EnemyManager {
         }
     }
 
-
-
     public Enemies getEnemy(String name) {
         Enemies someEnemy = mEnemies.get(0);
         for (int i = 0; i < mEnemies.size; i++) {
@@ -55,6 +51,5 @@ public class EnemyManager {
         }
         return someEnemy;
     }
-
 
 }

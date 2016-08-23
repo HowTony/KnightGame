@@ -59,6 +59,4 @@ public class InputHandler {
         mShoot.update(deltatime);
         mShoot.render(sb);
     }
-
-
 }

@@ -230,7 +230,7 @@ public class Player extends Sprite {
                 region = mStandAnime.getKeyFrame(mStateTimer, 0);
                 break;
             default:
-                region = mGameAssets.getEmptyAnimation().getKeyFrame(mStateTimer, 1);
+                region = mStandAnime.getKeyFrame(mStateTimer, 0);
                 break;
         }
         mStateTimer = mCurrentState == mPreviousState ? mStateTimer + deltaTime : 0;

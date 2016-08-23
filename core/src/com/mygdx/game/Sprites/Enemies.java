@@ -116,7 +116,7 @@ public class Enemies{
                 region = mFlying.getKeyFrame(mStateTimer, 0);
                 break;
             default:
-                region = mAssets.getEmptyAnimation().getKeyFrame(mStateTimer, 1);
+                region = mAssets.getmEnemy_FLYING_DIE_Anim().getKeyFrame(mStateTimer, 1);
                 break;
         }
         mStateTimer = mCurrentState == mPreviousState ? mStateTimer + deltaTime : 0;

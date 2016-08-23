@@ -17,16 +17,15 @@ public class Assets {
     private TextureRegion[] mAlienJump = new TextureRegion[6];
     private TextureRegion[] mAlienFall = new TextureRegion[3];
     private TextureRegion[] mAlienLand = new TextureRegion[3];
-
     private TextureRegion[] mAlienRun = new TextureRegion[12];
     private TextureRegion[] mAlienWalk = new TextureRegion[12];
-    private TextureRegion[] mEmpty = new TextureRegion[12];
-
     private TextureRegion mArmGunRIGHT = new TextureRegion();
     private TextureRegion mArmGunLEFT = new TextureRegion();
     private TextureRegion mDuckyBullet = new TextureRegion();
     private TextureRegion[] mRingBullet = new TextureRegion[4];
     private TextureRegion[] mEnemy_FLYING_Fly = new TextureRegion[4];
+    private TextureRegion[] mEnemy_FLYING_ATK = new TextureRegion[2];
+    private TextureRegion[] mEnemy_FLYING_DIE = new TextureRegion[2];
 
     private Animation mAlienWalkingAnimation;
     private Animation mAlienStandingAnimation;
@@ -37,11 +36,10 @@ public class Assets {
     private Animation mAlienDeathAnimation;
     private Animation mAlienCrouchAnimation;
     private Animation mAlienShootAnimation;
-    private Animation mEmptyAnimation;
     private Animation mRingAnimation;
     private Animation mEnemy_FLYING_Fly_Anim;
-
-
+    private Animation mEnemy_FLYING_ATK_Anim;
+    private Animation mEnemy_FLYING_DIE_Anim;
 
    public void load(){
        mSpriteSheet = loadTexture("alien_sprite_NOARMS.png");
@@ -119,6 +117,15 @@ public class Assets {
            xLocation += 128;
        }
 
+       for(int i = 0; i < mEnemy_FLYING_ATK.length; i++){
+           mEnemy_FLYING_ATK[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+           xLocation += 128;
+       }
+
+       for(int i = 0; i < mEnemy_FLYING_DIE.length; i++){
+           mEnemy_FLYING_DIE[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+           xLocation += 128;
+       }
 
        mAlienWalkingAnimation = new Animation(0.1f, mAlienWalk);
        mAlienRunningAnimation = new Animation(0.1f, mAlienRun);
@@ -129,10 +136,10 @@ public class Assets {
        mAlienDeathAnimation = new Animation(0.1f, mAlienDeath);
        mAlienCrouchAnimation = new Animation(0.08f, mAlienCrouch);
        mAlienShootAnimation = new Animation(0.08f, mAlienShoot);
-       mEmptyAnimation = new Animation(0.08f, mEmpty);
        mRingAnimation = new Animation(0.1f, mRingBullet);
-
        mEnemy_FLYING_Fly_Anim = new Animation(0.15f, mEnemy_FLYING_Fly);
+       mEnemy_FLYING_ATK_Anim = new Animation(0.15f, mEnemy_FLYING_ATK);
+       mEnemy_FLYING_DIE_Anim = new Animation(0.15f, mEnemy_FLYING_DIE);
    }
 
     public Animation getWalkingAnimation(){
@@ -171,16 +178,20 @@ public class Assets {
         return this.mAlienLandingAnimation;
     }
 
-    public Animation getEmptyAnimation(){
-        return mEmptyAnimation;
-    }
-
     public Animation getRingAnimation(){
         return mRingAnimation;
     }
 
     public Animation getEnemy_FLYING_Fly_Anim(){
         return mEnemy_FLYING_Fly_Anim;
+    }
+
+    public Animation getmEnemy_FLYING_ATK_Anim(){
+        return mEnemy_FLYING_ATK_Anim;
+    }
+
+    public Animation getmEnemy_FLYING_DIE_Anim(){
+        return mEnemy_FLYING_DIE_Anim;
     }
 
     public TextureRegion getArmGunRIGHT(){
