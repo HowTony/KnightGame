@@ -24,9 +24,8 @@ public class EnemyManager {
     }
 
     private void addEnemies() {
-        mEnemies.add(new Enemies(mWorld, mPlayer, new Vector2(3, 5), false, ID));
-        for(int i = 0; i < 5; i++) {
-            mEnemies.add(new Enemies(mWorld, mPlayer, new Vector2(20 + (i * 10), 6), false, ID+i));
+        for(int i = 0; i < 10; i++) {
+            mEnemies.add(new Enemies(mWorld, mPlayer, new Vector2(5 + (i * 10), 6), false, ID+i));
         }
     }
 
@@ -34,6 +33,17 @@ public class EnemyManager {
         for(Enemies eachEnemy : mEnemies){
             eachEnemy.update(deltaTime);
         }
+        Array<Enemies>removableShots = new Array<Enemies>();
+        for(Enemies eachEnemy : mEnemies){
+            eachEnemy.update(deltaTime);
+            if(eachEnemy.isRemovable()){
+                eachEnemy.getBody().setActive(false);
+                removableShots.add(eachEnemy);
+            }
+        }
+            removeOldShots(removableShots);
+
+
     }
 
     public void render(Batch sb){
@@ -43,13 +53,20 @@ public class EnemyManager {
     }
 
     public Enemies getEnemy(String name) {
-        Enemies someEnemy = mEnemies.get(0);
+        Enemies someEnemy = mEnemies.first();
         for (int i = 0; i < mEnemies.size; i++) {
-            if (mEnemies.get(i).getBody().getFixtureList().get(0).toString().contains(name)) {
+            if (mEnemies.get(i).getBody().getFixtureList().get(0).getUserData().toString().equals(name)) {
                 someEnemy = mEnemies.get(i);
+                return someEnemy;
             }
         }
         return someEnemy;
     }
+
+
+    public void removeOldShots(Array<Enemies> itemsToRemove){
+        mEnemies.removeAll(itemsToRemove, true);
+    }
+
 
 }

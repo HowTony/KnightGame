@@ -92,6 +92,7 @@ public class Player extends Sprite {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(.15f,.33f);
         fixtureDef.shape = shape;
+        //fixtureDef.density = 0;
         fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
         fixtureDef.filter.groupIndex = CATEGORY_PLAYER;
         mBody.createFixture(fixtureDef).setUserData("player");
@@ -101,6 +102,7 @@ public class Player extends Sprite {
         fixtureDef.shape = shape;
         fixtureDef.isSensor = true;
         mBody.createFixture(fixtureDef).setUserData("foot1");
+
 
         //create foot sensor 2
         shape.setAsBox(.01f, .03f, new Vector2(.15f, -.32f), 0);

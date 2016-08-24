@@ -137,7 +137,7 @@ public class Assets {
        mAlienCrouchAnimation = new Animation(0.08f, mAlienCrouch);
        mAlienShootAnimation = new Animation(0.08f, mAlienShoot);
        mRingAnimation = new Animation(0.1f, mRingBullet);
-       mEnemy_FLYING_Fly_Anim = new Animation(0.15f, mEnemy_FLYING_Fly);
+       mEnemy_FLYING_Fly_Anim = new Animation(0.3f, mEnemy_FLYING_Fly);
        mEnemy_FLYING_ATK_Anim = new Animation(0.15f, mEnemy_FLYING_ATK);
        mEnemy_FLYING_DIE_Anim = new Animation(0.15f, mEnemy_FLYING_DIE);
    }
@@ -186,11 +186,11 @@ public class Assets {
         return mEnemy_FLYING_Fly_Anim;
     }
 
-    public Animation getmEnemy_FLYING_ATK_Anim(){
+    public Animation getEnemy_FLYING_ATK_Anim(){
         return mEnemy_FLYING_ATK_Anim;
     }
 
-    public Animation getmEnemy_FLYING_DIE_Anim(){
+    public Animation getEnemy_FLYING_DIE_Anim(){
         return mEnemy_FLYING_DIE_Anim;
     }
 

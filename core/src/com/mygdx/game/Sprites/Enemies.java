@@ -17,23 +17,30 @@ public class Enemies{
     private Body mBody;
     private Assets mAssets;
     private EnemyController mController;
-    private Animation mFlying;
+
+
+    private Animation mFlyAnimation;
+    private Animation mAttackAnimation;
+    private Animation mDieAnimation;
+
+    private int mHitsTaken = 0;
+    private int mHitsToKill = 3;
+    boolean mIsDead;
 
 
     private TextureRegion mCurrentPlayerFrame;
-    private enum State {FLYING}
+    private enum State {FLYING, ATTACK, DIE}
     private State mCurrentState;
     private State mPreviousState;
-    private float mStateTimer;
-    private float mCorrectAngle;
-
     private int ID;
 
-
+    private float mStateTimer;
+    private float mCorrectAngle;
     private float mPlayerWidth = 1.5f;
     private float mPlayerHeight = 1;
-    private float mSpriteXCenter = .48f;
-    private float mSpriteYCenter = .48f;
+    private float mSpriteXCenter = .5f;
+    private float mSpriteYCenter = .66f;
+    private float mCurrentTime = 0;
 
     private boolean mFacingRight = true;
     private final short CATEGORY_ENEMY = 0x0011;
@@ -42,6 +49,7 @@ public class Enemies{
 
     private boolean mIsGroundTypeEnemy;
     private boolean mAttacking = false;
+    private boolean mRemovable = false;
 
     public Enemies(World world, Player player, Vector2 spawnLoc, boolean enemyIsGroundType, int id){
         mWorld = world;
@@ -52,7 +60,10 @@ public class Enemies{
         mAssets = mPlayer.getGameAssets();
         ID = id;
         defineEnemy();
-        mFlying = mAssets.getEnemy_FLYING_Fly_Anim();
+        mFlyAnimation = mAssets.getEnemy_FLYING_Fly_Anim();
+        mAttackAnimation = mAssets.getEnemy_FLYING_ATK_Anim();
+        mDieAnimation = mAssets.getEnemy_FLYING_DIE_Anim();
+
     }
 
     public void defineEnemy(){
@@ -62,10 +73,11 @@ public class Enemies{
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         mBody = mWorld.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(.15f,.33f);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(.45f);
         fixtureDef.shape = shape;
         fixtureDef.density = .5f;
+        fixtureDef.restitution = .2f;
         fixtureDef.filter.groupIndex = CATEGORY_ENEMY;
         mBody.createFixture(fixtureDef).setUserData("enemy" + ID);
 
@@ -84,6 +96,19 @@ public class Enemies{
         animateSprite(deltaTime);
         getBodyAngle();
         mController.update(deltaTime);
+
+        if(mHitsTaken >= mHitsToKill){
+            setAttacking(false);
+            setIsDead(true);
+        }
+
+        if(isDead()){
+            mCurrentTime += deltaTime;
+            if(mCurrentTime >= 5){
+                setRemovable(true);
+            }
+        }
+
         if(mBody.getLinearVelocity().x > 0){
             reverseSpriteDirection(false);
         }else{
@@ -113,10 +138,16 @@ public class Enemies{
         TextureRegion region;
         switch(mCurrentState){
             case FLYING:
-                region = mFlying.getKeyFrame(mStateTimer, 0);
+                region = mFlyAnimation.getKeyFrame(mStateTimer, 0);
+                break;
+            case ATTACK:
+                region = mAttackAnimation.getKeyFrame(mStateTimer, 1);
+                break;
+            case DIE:
+                region = mDieAnimation.getKeyFrame(mStateTimer, 1);
                 break;
             default:
-                region = mAssets.getmEnemy_FLYING_DIE_Anim().getKeyFrame(mStateTimer, 1);
+                region = mAssets.getEnemy_FLYING_DIE_Anim().getKeyFrame(mStateTimer, 1);
                 break;
         }
         mStateTimer = mCurrentState == mPreviousState ? mStateTimer + deltaTime : 0;
@@ -125,19 +156,27 @@ public class Enemies{
     }
 
     public State getState(){
-        return State.FLYING;
+        if(mIsDead){
+            return State.DIE;
+        }else {
+            return State.FLYING;
+        }
     }
 
     public void reverseSpriteDirection(boolean b){
         if(b){
             mFacingRight = false;
-            mSpriteXCenter = -1;
+            mSpriteXCenter = -.8f;
             mPlayerWidth = -1.6f;
         }else{
             mFacingRight = true;
             mPlayerWidth = 1.6f;
-            mSpriteXCenter = 1f;
+            mSpriteXCenter = .8f;
         }
+    }
+
+    public void increaseHitsTaken(){
+        mHitsTaken += 1;
     }
 
     public Body getBody(){
@@ -156,4 +195,25 @@ public class Enemies{
     public boolean isAttacking(){
         return mAttacking;
     }
+
+    public void setIsDead(boolean b){
+        mIsDead = b;
+    }
+
+    public boolean isDead(){
+        return mIsDead;
+    }
+
+    public void setRemovable(boolean b){
+        mRemovable = b;
+    }
+
+    public boolean isRemovable(){
+        return mRemovable;
+    }
+
+    public int getID(){
+        return ID;
+    }
+
 }

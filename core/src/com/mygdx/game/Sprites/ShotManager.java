@@ -31,7 +31,9 @@ public class ShotManager {
                 removableShots.add(eachShot);
             }
         }
-        removeOldShots(removableShots);
+        if(removableShots.size > 0) {
+            removeOldShots(removableShots);
+        }
     }
 
     public void removeOldShots(Array<GunShot> itemsToRemove){
@@ -45,7 +47,7 @@ public class ShotManager {
     }
 
     public GunShot getShot(String name) {
-        GunShot someShot = mBullets.get(0);
+        GunShot someShot = mBullets.first();
         for (int i = 0; i < mBullets.size; i++) {
             if (mBullets.get(i).getBody().getFixtureList().get(0).toString().contains(name)) {
                 someShot = mBullets.get(i);

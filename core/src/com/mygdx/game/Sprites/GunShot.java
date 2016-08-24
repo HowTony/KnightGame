@@ -18,7 +18,7 @@ public class GunShot {
     private final short CATEGORY_PLAYER = 0x0001;
     private float mTimeAlive = 0;
     private boolean mIsDead = false;
-    private float mBulletSpeed = 25f;
+    private float mBulletSpeed = 22f;
     private Assets mGameAssets;
     private Animation mRingBullet;
     private TextureRegion mCurrentPlayerFrame;
@@ -45,14 +45,13 @@ public class GunShot {
         bodyDef.gravityScale = 0f;
         mBullet = mWorld.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(.06f, .06f);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(.06f);
         fixtureDef.shape = shape;
         fixtureDef.filter.groupIndex = CATEGORY_PLAYER;
         fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
         fixtureDef.density = 5f;
         mBullet.createFixture(fixtureDef).setUserData("shot");
-        mBullet.isBullet();
         shape.dispose();
     }
 
@@ -118,7 +117,5 @@ public class GunShot {
     public State getState(){
         return State.FLYING;
     }
-
-
 
 }

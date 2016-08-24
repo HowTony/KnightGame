@@ -23,7 +23,7 @@ public class HUD implements Disposable{
     private Stage mStage;
     private Viewport mView;
 
-    private Integer mWorldTimer;
+    private Integer mWorldTimer = 500;
     private float mTimeCount;
     private Integer mScore;
 
@@ -47,6 +47,7 @@ public class HUD implements Disposable{
 
         mFont = new BitmapFont();
 
+
         mView = new StretchViewport(Platformer.V_WIDTH, Platformer.V_HEIGHT, new OrthographicCamera());
         mStage = new Stage(mView, sb);
 
@@ -56,14 +57,14 @@ public class HUD implements Disposable{
 
         mCountDownLabel = new Label(String.format("%03d", mWorldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         mScoreLabel = new Label(String.format("%06d", mScore), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        //mTimeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        mTimeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-       // mWorldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-       // mPlayerLabel = new Label("PLAYER", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-//        table.add(mPlayerLabel).expandX().padTop(10);
-//        table.add(mWorldLabel).expandX().padTop(10);
-//        table.add(mTimeLabel).expandX().padTop(10);
-//        table.row();
+        mWorldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        mPlayerLabel = new Label("PLAYER", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        table.add(mPlayerLabel).expandX().padTop(10);
+        table.add(mWorldLabel).expandX().padTop(10);
+        table.add(mTimeLabel).expandX().padTop(10);
+        table.row();
         table.add(mScoreLabel).expandX();
 
         table.add(mCountDownLabel).expandX();
@@ -71,14 +72,18 @@ public class HUD implements Disposable{
     }
 
     public void update(float deltaTime){
+        mTimeCount += deltaTime;
         mFPS = Gdx.graphics.getFramesPerSecond();
+        if(mTimeCount >= 1) {
+            mWorldTimer -= 1;
+        }
         //mLevelLable = new Label("FPS "  + mFPS, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     }
 
-    public void render(float deltatime,Batch sb){
+    public void render(float deltatime,Batch sb, OrthographicCamera cam){
         update(deltatime);
-        //sb.setProjectionMatrix();
-        //mFont.draw(sb, "FPS "  + mFPS, 1,1  );
+
+
     }
 
 

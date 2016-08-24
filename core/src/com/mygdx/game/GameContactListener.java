@@ -30,10 +30,26 @@ public class GameContactListener implements ContactListener {
         Fixture fb = contact.getFixtureA();
         Fixture fa = contact.getFixtureB();
 
+        //if enemy gets hit by gun, add +1 to hits taken on enemy counter
+        if (fa.getUserData().toString().contains("shot") || fb.getUserData().toString().contains("shot")) {
+            if (fa.getUserData().toString().contains("enemy")) {
+                mEnemy = mEnemies.getEnemy(fa.getBody().getFixtureList().get(0).getUserData().toString());
+                //System.out.println("fa shot " + mEnemy.getBody().getFixtureList().get(0).getUserData().toString());
+                mEnemy.increaseHitsTaken();
+                mEnemy.setAttacking(true);
+            }else if (fb.getUserData().toString().contains("enemy")){
+                mEnemy = mEnemies.getEnemy(fb.getBody().getFixtureList().get(0).getUserData().toString());
+                //System.out.println("fb shot " + mEnemy.getBody().getFixtureList().get(0).getUserData().toString());
+                mEnemy.increaseHitsTaken();
+                mEnemy.setAttacking(true);
+            }
+        }
+
+
         //if player and enemy aggro sensor collide then set the enemy to attacking, enemy will chase player
         if (fa.getUserData().toString().contains("aggro") || fb.getUserData().toString().contains("aggro")) {
             if (fa.getUserData().equals("player") || fb.getUserData().equals("player")) {
-                mEnemy = mEnemies.getEnemy(fa.getBody().getFixtureList().get(0).toString());
+                mEnemy = mEnemies.getEnemy(fa.getBody().getFixtureList().get(0).getUserData().toString());
                 mEnemy.setAttacking(true);
             }
         }

@@ -112,7 +112,7 @@ public class PlayScreen implements Screen {
         mPlayer.render(mBatch);
         mEnemies.render(mBatch);
         mInputs.update(deltaTime, mBatch);
-        mHud.render(deltaTime, mBatch);
+        mHud.render(deltaTime, mBatch, mGameCam);
         mBatch.end();
         if(mDebugging) {
             mDebugRenderer.render(mWorld, mGameCam.combined);

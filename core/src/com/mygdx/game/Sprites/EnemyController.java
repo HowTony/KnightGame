@@ -15,7 +15,7 @@ public class EnemyController {
     private boolean mIsPlayerOnRightSide;
 
     private float mCurrentTime = 0;
-    private float mEnemyScountRange = 4;
+    private float mEnemyScountRange = 5;
 
 
     public EnemyController(World world, Enemies enemies, Player player, boolean groundType) {
@@ -28,66 +28,73 @@ public class EnemyController {
 
     public void update(float deltaTime) {
         mCurrentTime += deltaTime;
-        if(mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x > 0) {
+        if (mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x > 0) {
             mIsPlayerOnRightSide = true;
-        }else{
+        } else {
             mIsPlayerOnRightSide = false;
         }
 
 
-        if (!mEnemy.isAttacking()) {
-
-            if (mEnemy.getBody().getLinearVelocity().x > -2f && mEnemy.getBody().getPosition().x > mEnemy.getSpawnLocation().x - mEnemyScountRange) {
-                mEnemy.getBody().applyLinearImpulse(new Vector2(-.18f, 0), mEnemy.getBody().getWorldCenter(), true);
-
-
-            } else if (mEnemy.getBody().getLinearVelocity().x < 2f && mEnemy.getBody().getPosition().x < mEnemy.getSpawnLocation().x + mEnemyScountRange) {
-                mEnemy.getBody().applyLinearImpulse(new Vector2(.18f, 0), mEnemy.getBody().getWorldCenter(), true);
-
+        if (!mEnemy.isAttacking() && !mEnemy.isDead()) {
+            if (mCurrentTime <= 6) {
+                moveLeft(1.5f);
+            } else if (mCurrentTime > 6) {
+                moveRight(1.5f);
+                if(mCurrentTime >= 12){
+                    mCurrentTime = 0;
+                }
             }
 
-        } else if(mEnemy.isAttacking()) {
+            if(mEnemy.getBody().getPosition().y > mEnemy.getSpawnLocation().y){
+                moveDown(.05f);
+            }
+
+        } else if (mEnemy.isAttacking() && !mEnemy.isDead()) {
+
             if (mEnemy.getBody().getPosition().y - mPlayer.getBody().getPosition().y > 3) {
-              moveDown();
-            } else if ( mEnemy.getBody().getPosition().y - mPlayer.getBody().getPosition().y < 1) {
-               moveUp();
-            } if (mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x > 2) {
-                moveLeft();
-            } else if ( mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x < -2 ) {
-                moveRight();
+                moveDown(2);
+            } else if (mEnemy.getBody().getPosition().y - mPlayer.getBody().getPosition().y < 1) {
+                moveUp(2);
+            }
+            if (mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x > 2) {
+                moveLeft(4);
+            } else if (mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x < -2) {
+                moveRight(4);
             }
 
-            System.out.println(mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x);
+            //System.out.println(mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x);
+        } else if (mEnemy.isDead())
 
+        {
+           mEnemy.getBody().setGravityScale(1);
 
+        }
+
+    }
+
+    public void moveRight(float maxSpeed) {
+        if (mEnemy.getBody().getLinearVelocity().x < maxSpeed) {
+            mEnemy.getBody().applyLinearImpulse(new Vector2(.8f, 0), mEnemy.getBody().getWorldCenter(), true);
         }
     }
 
-
-    public void moveRight(){
-        if (mEnemy.getBody().getLinearVelocity().x < 4f) {
-            mEnemy.getBody().applyLinearImpulse(new Vector2( .8f, 0), mEnemy.getBody().getWorldCenter(), true);
+    public void moveLeft(float maxSpeed) {
+        if (mEnemy.getBody().getLinearVelocity().x > -maxSpeed) {
+            mEnemy.getBody().applyLinearImpulse(new Vector2(-.8f, 0), mEnemy.getBody().getWorldCenter(), true);
         }
     }
 
-    public void moveLeft(){
-        if (mEnemy.getBody().getLinearVelocity().x > -4f) {
-            mEnemy.getBody().applyLinearImpulse(new Vector2( -.8f, 0), mEnemy.getBody().getWorldCenter(), true);
+    public void moveUp(float maxSpeed) {
+        if (mEnemy.getBody().getLinearVelocity().y < maxSpeed) {
+            mEnemy.getBody().applyLinearImpulse(new Vector2(0, .5f), mEnemy.getBody().getWorldCenter(), true);
         }
     }
 
-    public void moveUp(){
-        if (mEnemy.getBody().getLinearVelocity().y < 2) {
-            mEnemy.getBody().applyLinearImpulse(new Vector2( 0, .5f), mEnemy.getBody().getWorldCenter(), true);
+    public void moveDown(float maxSpeed) {
+        if (mEnemy.getBody().getLinearVelocity().y > -maxSpeed) {
+            mEnemy.getBody().applyLinearImpulse(new Vector2(0, -.5f), mEnemy.getBody().getWorldCenter(), true);
         }
     }
-
-    public void moveDown(){
-        if (mEnemy.getBody().getLinearVelocity().y > -2) {
-            mEnemy.getBody().applyLinearImpulse(new Vector2( 0,-.5f), mEnemy.getBody().getWorldCenter(), true);
-        }
-    }
-
 
 
 }
