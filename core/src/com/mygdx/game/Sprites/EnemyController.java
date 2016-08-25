@@ -61,15 +61,8 @@ public class EnemyController {
             } else if (mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x < -2) {
                 moveRight(4);
             }
-
             //System.out.println(mEnemy.getBody().getPosition().x - mPlayer.getBody().getPosition().x);
-        } else if (mEnemy.isDead())
-
-        {
-           mEnemy.getBody().setGravityScale(1);
-
         }
-
     }
 
     public void moveRight(float maxSpeed) {

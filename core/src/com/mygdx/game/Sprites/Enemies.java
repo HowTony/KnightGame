@@ -18,7 +18,6 @@ public class Enemies{
     private Assets mAssets;
     private EnemyController mController;
 
-
     private Animation mFlyAnimation;
     private Animation mAttackAnimation;
     private Animation mDieAnimation;
@@ -26,7 +25,6 @@ public class Enemies{
     private int mHitsTaken = 0;
     private int mHitsToKill = 3;
     boolean mIsDead;
-
 
     private TextureRegion mCurrentPlayerFrame;
     private enum State {FLYING, ATTACK, DIE}
@@ -63,7 +61,6 @@ public class Enemies{
         mFlyAnimation = mAssets.getEnemy_FLYING_Fly_Anim();
         mAttackAnimation = mAssets.getEnemy_FLYING_ATK_Anim();
         mDieAnimation = mAssets.getEnemy_FLYING_DIE_Anim();
-
     }
 
     public void defineEnemy(){
@@ -100,6 +97,7 @@ public class Enemies{
         if(mHitsTaken >= mHitsToKill){
             setAttacking(false);
             setIsDead(true);
+            mBody.setGravityScale(.4f);
         }
 
         if(isDead()){
@@ -117,11 +115,7 @@ public class Enemies{
     }
 
     public void render(Batch batch){
-        if(mFacingRight) {
-            batch.draw(mCurrentPlayerFrame, mBody.getPosition().x - mSpriteXCenter, mBody.getPosition().y - mSpriteYCenter, mPlayerWidth, 1.5f);
-        }else{
-            batch.draw(mCurrentPlayerFrame, mBody.getPosition().x - mSpriteXCenter, mBody.getPosition().y - mSpriteYCenter, mPlayerWidth, 1.5f);
-        }
+        batch.draw(mCurrentPlayerFrame, mBody.getPosition().x - mSpriteXCenter, mBody.getPosition().y - mSpriteYCenter, mPlayerWidth, 1.5f);
     }
 
     public void getBodyAngle(){

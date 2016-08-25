@@ -25,7 +25,7 @@ public class EnemyManager {
 
     private void addEnemies() {
         for(int i = 0; i < 10; i++) {
-            mEnemies.add(new Enemies(mWorld, mPlayer, new Vector2(5 + (i * 10), 6), false, ID+i));
+            mEnemies.add(new Enemies(mWorld, mPlayer, new Vector2(5 + (i * 10), 6), false, ID++));
         }
     }
 
@@ -42,8 +42,6 @@ public class EnemyManager {
             }
         }
             removeOldShots(removableShots);
-
-
     }
 
     public void render(Batch sb){
