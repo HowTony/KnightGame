@@ -27,6 +27,7 @@ public class Assets {
     private TextureRegion[] mEnemy_FLYING_ATK = new TextureRegion[2];
     private TextureRegion[] mEnemy_FLYING_DIE = new TextureRegion[2];
     private TextureRegion mAlienHead = new TextureRegion();
+    private TextureRegion mMouseCursor = new TextureRegion();
 
     private Animation mAlienWalkingAnimation;
     private Animation mAlienStandingAnimation;
@@ -112,6 +113,9 @@ public class Assets {
        }
 
        mAlienHead = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+
+       xLocation += 128;
+       mMouseCursor = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
 
        yLocation += 128;
        xLocation = 0;
@@ -211,6 +215,10 @@ public class Assets {
 
     public TextureRegion getAlienHead(){
         return mAlienHead;
+    }
+
+    public TextureRegion getMousecursor(){
+        return mMouseCursor;
     }
 
     public Texture loadTexture(String file){

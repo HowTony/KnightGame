@@ -1,8 +1,11 @@
 package com.mygdx.game.Scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,6 +35,9 @@ public class HUD implements Disposable{
     private Player mPlayer;
     private Assets mAssets;
     private TextureRegion mAlienHead;
+    private TextureRegion mMouseCursor;
+    private Pixmap mPix;
+    private Cursor mMouse;
 
 
     private BitmapFont mFontBasic;
@@ -54,6 +60,9 @@ public class HUD implements Disposable{
         mWorldTimer = 300;
         mTimeCount = 0;
         mScore = 0;
+        mMouseCursor = mAssets.getMousecursor();
+        mPix = new Pixmap(Gdx.files.internal("MouseCursor.png"));
+        mMouse = Gdx.graphics.newCursor(mPix, 0, 0);
 
         mFontBasic = new BitmapFont(Gdx.files.internal("myfont.fnt"));
         mFontDeathMsg = new BitmapFont(Gdx.files.internal("perished.fnt"));
@@ -97,12 +106,14 @@ public class HUD implements Disposable{
     public void render(float deltatime,Batch sb, OrthographicCamera cam){
         update(deltatime);
         sb.begin();
+        Gdx.graphics.setCursor(mMouse);
+
         mFontBasic.draw(sb,"FPS: " + mFPS , 50,1150);
         for(int i = 0; i < mPlayer.getHitsTilDeath(); i++){
             sb.draw(mAlienHead, i * 55,0);
         }
         if(mPlayer.isDead()){
-            mFontDeathMsg.draw(sb, "YOU DIED!", 450,600);
+            mFontDeathMsg.draw(sb, "YOU DIED!", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
         }
         sb.end();
 

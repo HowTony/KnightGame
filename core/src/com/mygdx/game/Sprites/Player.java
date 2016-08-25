@@ -58,7 +58,7 @@ public class Player extends Sprite {
 
 
     final short CATEGORY_PLAYER = 0x0001;
-    private int mHitsTilDeath = 4;
+    private int mHitsTilDeath = 3;
 
     private Vector2 mAimDirection;
     private Vector3 mMousePos;
