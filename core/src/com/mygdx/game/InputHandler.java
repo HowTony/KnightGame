@@ -20,33 +20,35 @@ public class InputHandler {
     }
 
     public void handleInput(float deltaTime) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if (mPlayer.isPlayerOnGround()) {
-                mPlayer.getBody().applyLinearImpulse(new Vector2(0, 6f), mPlayer.getBody().getWorldCenter(), true);
-                mPlayer.setFoot2OnGround(false);
-                mPlayer.setFoot1OnGround(false);
+        if(!mPlayer.isDead()) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                if (mPlayer.isPlayerOnGround()) {
+                    mPlayer.getBody().applyLinearImpulse(new Vector2(0, 6f), mPlayer.getBody().getWorldCenter(), true);
+                    mPlayer.setFoot2OnGround(false);
+                    mPlayer.setFoot1OnGround(false);
+                }
             }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 
-            if (mPlayer.getBody().getLinearVelocity().x <= 3.5f) {
-                mPlayer.getBody().applyLinearImpulse(new Vector2(.18f, 0), mPlayer.getBody().getWorldCenter(), true);
-                mPlayer.reverseSpriteDirection(false);
+                if (mPlayer.getBody().getLinearVelocity().x <= 3.5f) {
+                    mPlayer.getBody().applyLinearImpulse(new Vector2(.18f, 0), mPlayer.getBody().getWorldCenter(), true);
+                    mPlayer.reverseSpriteDirection(false);
+                }
             }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (mPlayer.getBody().getLinearVelocity().x >= -3.5f) {
-                mPlayer.getBody().applyLinearImpulse(new Vector2(-.18f, 0), mPlayer.getBody().getWorldCenter(), true);
-                mPlayer.reverseSpriteDirection(true);
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                if (mPlayer.getBody().getLinearVelocity().x >= -3.5f) {
+                    mPlayer.getBody().applyLinearImpulse(new Vector2(-.18f, 0), mPlayer.getBody().getWorldCenter(), true);
+                    mPlayer.reverseSpriteDirection(true);
+                }
             }
-        }
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            if(mPlayer.isPlayerOnGround() && mCanShoot) {
-                mShoot.addBullets();
-                mCanShoot = false;
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                if (mPlayer.isPlayerOnGround() && mCanShoot) {
+                    mShoot.addBullets();
+                    mCanShoot = false;
+                }
+            } else {
+                mCanShoot = true;
             }
-        }else{
-            mCanShoot = true;
         }
     }
 

@@ -58,6 +58,7 @@ public class Player extends Sprite {
 
 
     final short CATEGORY_PLAYER = 0x0001;
+    private int mHitsTilDeath = 4;
 
     private Vector2 mAimDirection;
     private Vector3 mMousePos;
@@ -121,7 +122,9 @@ public class Player extends Sprite {
 
 
 
-
+        if(mHitsTilDeath <= 0){
+            mIsDead = true;
+        }
         armUpdate();
         if(mFoot1OnGround || mFoot2OnGround){
             setPlayerOnGround(true);
@@ -174,7 +177,7 @@ public class Player extends Sprite {
 
     public void render(SpriteBatch batch){
         batch.draw(mCurrentPlayerFrame, getX() - mSpriteXCenter, getY() - mSpriteYCenter, mPlayerWidth , mPlayerHeight);
-        if(mPlayerOnGround) {
+        if(mPlayerOnGround && !isDead()) {
             if(!mFacingRight) {
                 batch.draw(mGameAssets.getArmGunLEFT(), (getX() - mSpriteXCenter)  - .725f, (getY() - mSpriteYCenter) - .05f, mLeftArmOriginX, mLeftArmOriginY, mArmWidth, mArmHeight, mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
             }else{
@@ -231,6 +234,9 @@ public class Player extends Sprite {
             case STANDING:
                 region = mStandAnime.getKeyFrame(mStateTimer, 0);
                 break;
+            case DEATH:
+                region = mDeathAnime.getKeyFrame(mStateTimer, 1);
+                break;
             default:
                 region = mStandAnime.getKeyFrame(mStateTimer, 0);
                 break;
@@ -240,21 +246,26 @@ public class Player extends Sprite {
         return region;
     }
 
-    public State getState(){
-        if(mBody.getLinearVelocity().y > 0 && !mPlayerOnGround){
-            return State.JUMPING;
-        }else if(mBody.getLinearVelocity().y < 0 && !mPlayerOnGround){
-            return State.FALLING;
-        }else if(mBody.getLinearVelocity().y == 0 && mPlayerOnGround && mPreviousState == State.FALLING ){
-            return State.LANDING;
-        }else if(mBody.getLinearVelocity().x < -3 || mBody.getLinearVelocity().x > 3 && mPlayerOnGround){
-            return State.RUNNING;
-        }else if(mBody.getLinearVelocity().x < 0 || mBody.getLinearVelocity().x > 0 && mPlayerOnGround){
-            return State.WALKING;
+    public State getState() {
+        if (!mIsDead) {
+            if (mBody.getLinearVelocity().y > 0 && !mPlayerOnGround) {
+                return State.JUMPING;
+            } else if (mBody.getLinearVelocity().y < 0 && !mPlayerOnGround) {
+                return State.FALLING;
+            } else if (mBody.getLinearVelocity().y == 0 && mPlayerOnGround && mPreviousState == State.FALLING) {
+                return State.LANDING;
+            } else if (mBody.getLinearVelocity().x < -3 || mBody.getLinearVelocity().x > 3 && mPlayerOnGround) {
+                return State.RUNNING;
+            } else if (mBody.getLinearVelocity().x < 0 || mBody.getLinearVelocity().x > 0 && mPlayerOnGround) {
+                return State.WALKING;
+            } else {
+                return State.STANDING;
+            }
         }else{
-            return State.STANDING;
+            return State.DEATH;
         }
     }
+
 
     public void setPlayerOnGround(boolean b) {
         this.mPlayerOnGround = b;
@@ -288,6 +299,14 @@ public class Player extends Sprite {
 
     public boolean isDead(){
         return mIsDead;
+    }
+
+    public void takeDamage(){
+        mHitsTilDeath -= 1;
+    }
+
+    public int getHitsTilDeath(){
+        return mHitsTilDeath;
     }
 
 }

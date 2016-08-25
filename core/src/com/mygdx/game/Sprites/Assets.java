@@ -26,6 +26,7 @@ public class Assets {
     private TextureRegion[] mEnemy_FLYING_Fly = new TextureRegion[4];
     private TextureRegion[] mEnemy_FLYING_ATK = new TextureRegion[2];
     private TextureRegion[] mEnemy_FLYING_DIE = new TextureRegion[2];
+    private TextureRegion mAlienHead = new TextureRegion();
 
     private Animation mAlienWalkingAnimation;
     private Animation mAlienStandingAnimation;
@@ -110,6 +111,8 @@ public class Assets {
            xLocation += 128;
        }
 
+       mAlienHead = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
+
        yLocation += 128;
        xLocation = 0;
        for(int i = 0; i < mEnemy_FLYING_Fly.length; i++){
@@ -139,7 +142,7 @@ public class Assets {
        mRingAnimation = new Animation(0.1f, mRingBullet);
        mEnemy_FLYING_Fly_Anim = new Animation(0.3f, mEnemy_FLYING_Fly);
        mEnemy_FLYING_ATK_Anim = new Animation(0.15f, mEnemy_FLYING_ATK);
-       mEnemy_FLYING_DIE_Anim = new Animation(0.15f, mEnemy_FLYING_DIE);
+       mEnemy_FLYING_DIE_Anim = new Animation(0.8f, mEnemy_FLYING_DIE);
    }
 
     public Animation getWalkingAnimation(){
@@ -204,6 +207,10 @@ public class Assets {
 
     public TextureRegion getDucky(){
         return this.mDuckyBullet;
+    }
+
+    public TextureRegion getAlienHead(){
+        return mAlienHead;
     }
 
     public Texture loadTexture(String file){

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Platformer;
+import com.mygdx.game.Sprites.Assets;
+import com.mygdx.game.Sprites.Player;
 import javafx.scene.text.Font;
 
 /**
@@ -26,49 +29,60 @@ public class HUD implements Disposable{
     private Integer mWorldTimer = 500;
     private float mTimeCount;
     private Integer mScore;
+    private Player mPlayer;
+    private Assets mAssets;
+    private TextureRegion mAlienHead;
 
 
-    private BitmapFont mFont;
+    private BitmapFont mFontBasic;
+    private BitmapFont mFontDeathMsg;
 
 
-    private Label mCountDownLabel;
-    private Label mScoreLabel;
-    private Label mTimeLabel;
-    private Label mLevelLable;
-    private Label mWorldLabel;
-    private Label mPlayerLabel;
+//    private Label mCountDownLabel;
+//    private Label mScoreLabel;
+//    private Label mTimeLabel;
+//    private Label mLevelLable;
+//    private Label mWorldLabel;
+//    private Label mPlayerLabel;
 
     private int mFPS = 10;
 
-    public HUD(SpriteBatch sb){
+    public HUD(SpriteBatch sb, Player player){
+        mPlayer = player;
+        mAssets = mPlayer.getGameAssets();
+        mAlienHead = mAssets.getAlienHead();
         mWorldTimer = 300;
         mTimeCount = 0;
         mScore = 0;
 
-        mFont = new BitmapFont();
+        mFontBasic = new BitmapFont(Gdx.files.internal("myfont.fnt"));
+        mFontDeathMsg = new BitmapFont(Gdx.files.internal("perished.fnt"));
+        mFontBasic.setColor(Color.WHITE);
+        //how to scale the font
+//        mFont.getData().scale(.7f);
 
 
         mView = new StretchViewport(Platformer.V_WIDTH, Platformer.V_HEIGHT, new OrthographicCamera());
         mStage = new Stage(mView, sb);
+//
+//        Table table = new Table();
+//        table.top();
+//        table.setFillParent(true);// makes table the size of the stage
 
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);// makes table the size of the stage
-
-        mCountDownLabel = new Label(String.format("%03d", mWorldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        mScoreLabel = new Label(String.format("%06d", mScore), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        mTimeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-
-        mWorldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        mPlayerLabel = new Label("PLAYER", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        table.add(mPlayerLabel).expandX().padTop(10);
-        table.add(mWorldLabel).expandX().padTop(10);
-        table.add(mTimeLabel).expandX().padTop(10);
-        table.row();
-        table.add(mScoreLabel).expandX();
-
-        table.add(mCountDownLabel).expandX();
-        mStage.addActor(table);
+//        mCountDownLabel = new Label(String.format("%03d", mWorldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+//        mScoreLabel = new Label(String.format("%06d", mScore), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+//        mTimeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+//
+//        mWorldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+//        mPlayerLabel = new Label("PLAYER", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+//        table.add(mPlayerLabel).expandX().padTop(10);
+//        table.add(mWorldLabel).expandX().padTop(10);
+//        table.add(mTimeLabel).expandX().padTop(10);
+//        table.row();
+//        table.add(mScoreLabel).expandX();
+//
+//        table.add(mCountDownLabel).expandX();
+//        mStage.addActor(table);
     }
 
     public void update(float deltaTime){
@@ -82,6 +96,15 @@ public class HUD implements Disposable{
 
     public void render(float deltatime,Batch sb, OrthographicCamera cam){
         update(deltatime);
+        sb.begin();
+        mFontBasic.draw(sb,"FPS: " + mFPS , 50,1150);
+        for(int i = 0; i < mPlayer.getHitsTilDeath(); i++){
+            sb.draw(mAlienHead, i * 55,0);
+        }
+        if(mPlayer.isDead()){
+            mFontDeathMsg.draw(sb, "YOU DIED!", 450,600);
+        }
+        sb.end();
 
 
     }

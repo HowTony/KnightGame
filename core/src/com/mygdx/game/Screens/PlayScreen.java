@@ -52,7 +52,7 @@ public class PlayScreen implements Screen {
         mBatch = batch;
         mGameCam = new OrthographicCamera();
         mGamePort = new StretchViewport(Platformer.V_WIDTH / Platformer.PPM, Platformer.V_HEIGHT / Platformer.PPM, mGameCam);
-        mHud = new HUD(mBatch);
+
         mMapLoader = new TmxMapLoader();
         mMap = mMapLoader.load("test3.tmx");
         mRenderer = new OrthogonalTiledMapRenderer(mMap, 1/ Platformer.PPM);
@@ -60,6 +60,7 @@ public class PlayScreen implements Screen {
 
         mWorld = new World(new Vector2( 0, -9.81f), true);
         mPlayer = new Player(mWorld, mMousePos);
+        mHud = new HUD(mBatch, mPlayer);
         mEnemies = new EnemyManager(mWorld, mPlayer);
         mShots = new ShotManager(mPlayer);
         mInputs = new InputHandler(mPlayer, mShots);
@@ -107,12 +108,12 @@ public class PlayScreen implements Screen {
         update(deltaTime);
         mRenderer.render();
         mHud.getmStage().draw();
+        mHud.render(deltaTime, mBatch, mGameCam);
         mBatch.setProjectionMatrix(mGameCam.combined);
         mBatch.begin();
         mPlayer.render(mBatch);
         mEnemies.render(mBatch);
         mInputs.update(deltaTime, mBatch);
-        mHud.render(deltaTime, mBatch, mGameCam);
         mBatch.end();
         if(mDebugging) {
             mDebugRenderer.render(mWorld, mGameCam.combined);

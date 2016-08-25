@@ -32,12 +32,21 @@ public class GameContactListener implements ContactListener {
 
         //if enemy gets hit by gun, add +1 to hits taken on enemy counter
         if (fa.getUserData().toString().contains("shot") || fb.getUserData().toString().contains("shot")) {
+            //if the shot collides with a sensor then kill the shot
+            if (!fa.isSensor() && !fb.isSensor()) {
+                mShot = mShotManager.getShot(fa.getBody().getFixtureList().get(0).toString());
+                mShot.setIsDead(true);
+                mShot = mShotManager.getShot(fb.getBody().getFixtureList().get(0).toString());
+                mShot.setIsDead(true);
+            }
+
+
             if (fa.getUserData().toString().contains("enemy")) {
                 mEnemy = mEnemies.getEnemy(fa.getBody().getFixtureList().get(0).getUserData().toString());
                 //System.out.println("fa shot " + mEnemy.getBody().getFixtureList().get(0).getUserData().toString());
                 mEnemy.increaseHitsTaken();
                 mEnemy.setAttacking(true);
-            }else if (fb.getUserData().toString().contains("enemy")){
+            } else if (fb.getUserData().toString().contains("enemy")) {
                 mEnemy = mEnemies.getEnemy(fb.getBody().getFixtureList().get(0).getUserData().toString());
                 //System.out.println("fb shot " + mEnemy.getBody().getFixtureList().get(0).getUserData().toString());
                 mEnemy.increaseHitsTaken();
@@ -45,24 +54,19 @@ public class GameContactListener implements ContactListener {
             }
         }
 
-
-        //if player and enemy aggro sensor collide then set the enemy to attacking, enemy will chase player
-        if (fa.getUserData().toString().contains("aggro") || fb.getUserData().toString().contains("aggro")) {
-            if (fa.getUserData().equals("player") || fb.getUserData().equals("player")) {
+        if (fa.getUserData().equals("player") || fb.getUserData().equals("player")) {
+            if (fa.getUserData().toString().contains("aggro") || fb.getUserData().toString().contains("aggro")) {
+                //if player and enemy aggro sensor collide then set the enemy to attacking, enemy will chase player
                 mEnemy = mEnemies.getEnemy(fa.getBody().getFixtureList().get(0).getUserData().toString());
                 mEnemy.setAttacking(true);
+            }else if(fa.getUserData().toString().contains("enemy") || fb.getUserData().toString().contains("enemy")){
+                //player is hit by enemy
+                mInputs.getPlayer().takeDamage();
             }
         }
 
-        //if the shot collides with a sensor then kill the shot
-        if (fa.getUserData().toString().contains("shot") || fb.getUserData().toString().contains("shot")) {
-            if (!fa.isSensor() && !fb.isSensor()) {
-                mShot = mShotManager.getShot(fa.getBody().getFixtureList().get(0).toString());
-                mShot.setIsDead(true);
-                mShot = mShotManager.getShot(fb.getBody().getFixtureList().get(0).toString());
-                mShot.setIsDead(true);
-            }
-        }
+
+
 
         /*
         check to see if foot sensors are colliding with ground
