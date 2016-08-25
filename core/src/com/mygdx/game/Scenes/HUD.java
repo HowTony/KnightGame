@@ -62,7 +62,7 @@ public class HUD implements Disposable{
         mScore = 0;
         mMouseCursor = mAssets.getMousecursor();
         mPix = new Pixmap(Gdx.files.internal("MouseCursor.png"));
-        mMouse = Gdx.graphics.newCursor(mPix, 16, 16);
+        mMouse = Gdx.graphics.newCursor(mPix, 20, 20);
 
         mFontBasic = new BitmapFont(Gdx.files.internal("myfont.fnt"));
         mFontDeathMsg = new BitmapFont(Gdx.files.internal("perished.fnt"));
