@@ -27,7 +27,7 @@ import com.mygdx.game.Sprites.ShotManager;
  * Created by Tony Howarth on 6/23/2016.
  */
 public class PlayScreen implements Screen {
-    private boolean mDebugging = false;
+    private boolean mDebugging = true;
     private Game mGame;
     private SpriteBatch mBatch;
     private OrthographicCamera mGameCam;

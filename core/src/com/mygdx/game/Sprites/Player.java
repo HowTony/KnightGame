@@ -139,10 +139,12 @@ public class Player extends Sprite {
     }
 
     public void armUpdate(){
-        mAimDirection = new Vector2(mMousePos.x - mBody.getPosition().x, mMousePos.y - mBody.getPosition().y);
+        mAimDirection = new Vector2((mMousePos.x) - mBody.getPosition().x, (mMousePos.y) - mBody.getPosition().y);
+        mAimDirection.nor();
         Vector2 xAxis = new Vector2(1, 0);
         float angle = MathUtils.atan2(mAimDirection.y, mAimDirection.x) - MathUtils.atan2(xAxis.y, xAxis.x);
         mCorrectAngle = angle * MathUtils.radiansToDegrees;
+
 //        if(mFacingRight) {
 //            if (mCorrectAngle > 50) {
 //                mCorrectAngle = 50;
@@ -307,6 +309,10 @@ public class Player extends Sprite {
 
     public int getHitsTilDeath(){
         return mHitsTilDeath;
+    }
+
+    public boolean isFacingRight(){
+        return mFacingRight;
     }
 
 }

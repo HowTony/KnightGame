@@ -50,7 +50,7 @@ public class GunShot {
         fixtureDef.shape = shape;
         fixtureDef.filter.groupIndex = CATEGORY_PLAYER;
         fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
-        fixtureDef.density = 5f;
+        fixtureDef.density =5f;
         mBullet.createFixture(fixtureDef).setUserData("shot");
         shape.dispose();
     }
@@ -68,6 +68,7 @@ public class GunShot {
     }
 
     public void render(Batch sb){
+        //if(mPlayer.isFacingRight())
         sb.draw(mCurrentPlayerFrame, mBullet.getPosition().x - .52f , mBullet.getPosition().y - .5f, .525f, .495f, 1,1,1,1, mShotAngle);
         //sb.draw(mCurrentPlayerFrame, mBullet.getPosition().x - .54f , mBullet.getPosition().y - .46f, originX, originY, width, height, scaleX, ScaleY, roation);
     }
@@ -78,7 +79,8 @@ public class GunShot {
         bulletForce.nor();
         bulletForce.x *= mBulletSpeed;
         bulletForce.y *= mBulletSpeed;
-        Vector2 mousePos = new Vector2((Gdx.input.getX()), Gdx.input.getY());
+        Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+        mousePos.nor();
         mBullet.applyForce(bulletForce, mousePos, false);
     }
 
