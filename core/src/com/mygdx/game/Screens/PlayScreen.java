@@ -46,8 +46,9 @@ public class PlayScreen implements Screen {
     private EnemyManager mEnemies;
     private ShotManager mShots;
     private Vector3 mMousePos = new Vector3();
+    public static boolean mIsPaused = false;
 
-    public PlayScreen(Platformer game, SpriteBatch batch){
+    public PlayScreen(Platformer game, SpriteBatch batch) {
         this.mGame = game;
         mBatch = batch;
         mGameCam = new OrthographicCamera();
@@ -55,15 +56,15 @@ public class PlayScreen implements Screen {
 
         mMapLoader = new TmxMapLoader();
         mMap = mMapLoader.load("test3.tmx");
-        mRenderer = new OrthogonalTiledMapRenderer(mMap, 1/ Platformer.PPM);
+        mRenderer = new OrthogonalTiledMapRenderer(mMap, 1 / Platformer.PPM);
         mGameCam.position.set(mGamePort.getWorldWidth() / 2, mGamePort.getWorldHeight() / 2, 0);
 
-        mWorld = new World(new Vector2( 0, -9.81f), true);
+        mWorld = new World(new Vector2(0, -9.81f), true);
         mPlayer = new Player(mWorld, mMousePos);
         mHud = new HUD(mBatch, mPlayer);
         mEnemies = new EnemyManager(mWorld, mPlayer);
         mShots = new ShotManager(mPlayer);
-        mInputs = new InputHandler(mPlayer, mShots);
+        mInputs = new InputHandler(mPlayer, mShots, this);
         mContactListener = new GameContactListener(mInputs, mEnemies, mShots);
 
         mWorld.setContactListener(mContactListener);
@@ -74,17 +75,19 @@ public class PlayScreen implements Screen {
         mMapMaker.buildShapes(mMap, Platformer.PPM, mWorld, "slopes", "slopes");
     }
 
-    public void update(float deltaTime){
-        mWorld.step(1/60f, 6, 1);
-        mBodyRemoval.update(deltaTime);
-        mGameCam.position.x = mPlayer.getBody().getPosition().x;
-        //mGameCam.position.y = mPlayer.getmBody().getPosition().y;
-        mPlayer.update(deltaTime);
-        mEnemies.update(deltaTime);
+    public void update(float deltaTime) {
+        if (!mIsPaused) {
+            mWorld.step(1 / 60f, 6, 1);
+            mBodyRemoval.update(deltaTime);
+            mGameCam.position.x = mPlayer.getBody().getPosition().x;
+            //mGameCam.position.y = mPlayer.getmBody().getPosition().y;
+            mPlayer.update(deltaTime);
+            mEnemies.update(deltaTime);
+        }
 
-        if(mPlayer.getBody().getPosition().y > 8){
+        if (mPlayer.getBody().getPosition().y > 8) {
             mGameCam.position.y = mPlayer.getBody().getPosition().y;
-        }else if(mPlayer.getBody().getPosition().y < 8){
+        } else if (mPlayer.getBody().getPosition().y < 8) {
             //TODO
             //fix camera snap speed
             mGameCam.position.set(mGameCam.position.x, mGamePort.getWorldHeight() / 2, 0);
@@ -93,6 +96,7 @@ public class PlayScreen implements Screen {
         mMousePos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         mGameCam.unproject(mMousePos);
         mRenderer.setView(mGameCam);
+
 
     }
 
@@ -103,9 +107,11 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float deltaTime) {
-        Gdx.gl.glClearColor(.3f,.3f,.9f,1);
+        Gdx.gl.glClearColor(.3f, .3f, .9f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        update(deltaTime);
+
+            update(deltaTime);
+
         mRenderer.render();
         mHud.getmStage().draw();
         mHud.render(deltaTime, mBatch, mGameCam);
@@ -114,8 +120,10 @@ public class PlayScreen implements Screen {
         mPlayer.render(mBatch);
         mEnemies.render(mBatch);
         mInputs.update(deltaTime, mBatch);
+
         mBatch.end();
-        if(mDebugging) {
+
+        if (mDebugging) {
             mDebugRenderer.render(mWorld, mGameCam.combined);
         }
     }
@@ -127,12 +135,16 @@ public class PlayScreen implements Screen {
 
     @Override
     public void pause() {
-
+        mIsPaused = true;
     }
 
     @Override
     public void resume() {
+        mIsPaused = false;
+    }
 
+    public void reset(){
+        mGame.create();
     }
 
     @Override
@@ -149,4 +161,9 @@ public class PlayScreen implements Screen {
         mBatch.dispose();
         mWorld.dispose();
     }
+
+    public static boolean isPaused() {
+        return mIsPaused;
+    }
+
 }

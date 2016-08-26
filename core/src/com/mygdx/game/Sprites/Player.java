@@ -56,7 +56,6 @@ public class Player extends Sprite {
 
     private float mCurrentTime;
 
-
     final short CATEGORY_PLAYER = 0x0001;
     private int mHitsTilDeath = 3;
 
@@ -86,7 +85,7 @@ public class Player extends Sprite {
     public void definePlayer(){
         // create player rect
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(5,2 );
+        bodyDef.position.set(2,1 );
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         mBody = mWorld.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
@@ -115,13 +114,6 @@ public class Player extends Sprite {
 
     public void update(float deltaTime){
         mCurrentTime += deltaTime;
-//        if(mCurrentTime >= 1){
-//            System.out.println(mCorrectAngle);
-//            mCurrentTime = 0;
-//        }
-
-
-
         if(mHitsTilDeath <= 0){
             mIsDead = true;
         }
@@ -132,7 +124,12 @@ public class Player extends Sprite {
             setPlayerOnGround(false);
         }
         if(mBody.getPosition().y < 0){
-            mBody.setTransform(55,5,0);
+            if(mBody.getPosition().x <= 2){
+                mBody.setTransform(2, 1.2f, 0);
+            }else {
+                mBody.setTransform(mBody.getPosition().x - 2, mBody.getPosition().y + 5, 0);
+            }
+            takeDamage();
         }
         AnimateSprite(deltaTime);
         setPosition(mBody.getPosition().x - getWidth() / 2, .1f + mBody.getPosition().y - getHeight() / 2);
@@ -181,9 +178,13 @@ public class Player extends Sprite {
         batch.draw(mCurrentPlayerFrame, getX() - mSpriteXCenter, getY() - mSpriteYCenter, mPlayerWidth , mPlayerHeight);
         if(mPlayerOnGround && !isDead()) {
             if(!mFacingRight) {
-                batch.draw(mGameAssets.getArmGunLEFT(), (getX() - mSpriteXCenter)  - .725f, (getY() - mSpriteYCenter) - .05f, mLeftArmOriginX, mLeftArmOriginY, mArmWidth, mArmHeight, mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
+                batch.draw(mGameAssets.getArmGunLEFT(), (getX() - mSpriteXCenter)  - .725f,
+                        (getY() - mSpriteYCenter) - .05f, mLeftArmOriginX, mLeftArmOriginY, mArmWidth, mArmHeight,
+                        mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
             }else{
-                batch.draw(mGameAssets.getArmGunRIGHT(), (getX() - mSpriteXCenter) + .07f, (getY() - mSpriteYCenter) - .05f, mRightArmOriginX, mRightArmOriginY, mArmWidth, mArmHeight, mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
+                batch.draw(mGameAssets.getArmGunRIGHT(), (getX() - mSpriteXCenter) + .07f,
+                        (getY() - mSpriteYCenter) - .05f, mRightArmOriginX, mRightArmOriginY, mArmWidth, mArmHeight,
+                        mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
             }
         }
     }

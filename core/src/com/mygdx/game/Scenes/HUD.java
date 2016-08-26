@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Platformer;
+import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Assets;
 import com.mygdx.game.Sprites.Player;
 import javafx.scene.text.Font;
@@ -96,7 +97,7 @@ public class HUD implements Disposable{
 
     public void update(float deltaTime){
         mTimeCount += deltaTime;
-        mFPS = Gdx.graphics.getFramesPerSecond();
+        //mFPS = Gdx.graphics.getFramesPerSecond();
         if(mTimeCount >= 1) {
             mWorldTimer -= 1;
         }
@@ -108,14 +109,18 @@ public class HUD implements Disposable{
         sb.begin();
         Gdx.graphics.setCursor(mMouse);
 
-        mFontBasic.draw(sb,"FPS: " + mFPS , 50,1150);
+        //mFontBasic.draw(sb,"FPS: " + mFPS , 50,1150);
         for(int i = 0; i < mPlayer.getHitsTilDeath(); i++){
-            sb.draw(mAlienHead, i * 55,0);
+            sb.draw(mAlienHead, i * Platformer.V_WIDTH / 20, Platformer.V_HEIGHT * 10 / 11);
         }
         if(mPlayer.isDead()){
-            mFontDeathMsg.draw(sb, "YOU DIED!", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
+            mFontDeathMsg.draw(sb, "YOU DIED", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
+        }
+        if(PlayScreen.mIsPaused){
+            mFontDeathMsg.draw(sb, "PAUSED", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
         }
         sb.end();
+
 
 
     }

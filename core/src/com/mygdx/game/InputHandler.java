@@ -3,6 +3,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.ShotManager;
 
@@ -13,14 +14,29 @@ public class InputHandler {
     private Player mPlayer;
     private ShotManager mShoot;
     private boolean mCanShoot;
+    private PlayScreen mGame;
 
-    public InputHandler(Player player, ShotManager shots) {
+    public InputHandler(Player player, ShotManager shots, PlayScreen playscreen) {
         mPlayer = player;
         mShoot = shots;
+        mGame = playscreen;
     }
 
     public void handleInput(float deltaTime) {
-        if(!mPlayer.isDead()) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            if(!mGame.isPaused()) {
+                mGame.pause();
+            }else{
+                mGame.resume();
+            }
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.END)){
+            mGame.resume();
+            mGame.reset();
+        }
+
+        if(!mPlayer.isDead() && !mGame.isPaused()) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 if (mPlayer.isPlayerOnGround()) {
                     mPlayer.getBody().applyLinearImpulse(new Vector2(0, 6f), mPlayer.getBody().getWorldCenter(), true);
