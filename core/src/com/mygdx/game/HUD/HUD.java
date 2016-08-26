@@ -1,7 +1,6 @@
-package com.mygdx.game.Scenes;
+package com.mygdx.game.HUD;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,16 +10,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.Platformer;
+import com.mygdx.game.GameTools.Platformer;
 import com.mygdx.game.Screens.PlayScreen;
-import com.mygdx.game.Sprites.Assets;
-import com.mygdx.game.Sprites.Player;
-import javafx.scene.text.Font;
+import com.mygdx.game.GameTools.Assets;
+import com.mygdx.game.MoveableObjects.Player;
 
 /**
  * Created by Tony Howarth on 6/23/2016.
@@ -120,8 +116,6 @@ public class HUD implements Disposable{
             mFontDeathMsg.draw(sb, "PAUSED", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
         }
         sb.end();
-
-
 
     }
 

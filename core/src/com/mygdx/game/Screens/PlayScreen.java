@@ -2,12 +2,10 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -16,18 +14,17 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.*;
-import com.mygdx.game.Scenes.HUD;
-import com.mygdx.game.Sprites.Assets;
-import com.mygdx.game.Sprites.EnemyManager;
-import com.mygdx.game.Sprites.Player;
-import com.mygdx.game.Sprites.ShotManager;
+import com.mygdx.game.GameTools.*;
+import com.mygdx.game.HUD.HUD;
+import com.mygdx.game.MoveableObjects.Managers.EnemyManager;
+import com.mygdx.game.MoveableObjects.Player;
+import com.mygdx.game.MoveableObjects.Managers.ShotManager;
 
 /**
  * Created by Tony Howarth on 6/23/2016.
  */
 public class PlayScreen implements Screen {
-    private boolean mDebugging = true;
+    private boolean mDebugging = false;
     private Game mGame;
     private SpriteBatch mBatch;
     private OrthographicCamera mGameCam;
@@ -96,8 +93,6 @@ public class PlayScreen implements Screen {
         mMousePos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         mGameCam.unproject(mMousePos);
         mRenderer.setView(mGameCam);
-
-
     }
 
     @Override
@@ -144,7 +139,7 @@ public class PlayScreen implements Screen {
     }
 
     public void reset(){
-        mGame.create();
+        mGame.setScreen(new PlayScreen((Platformer)mGame, mBatch));
     }
 
     @Override

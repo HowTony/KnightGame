@@ -1,8 +1,9 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.GameTools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.GameTools.Animation;
 
 /**
  * Created by Tony Howarth on 7/13/2016.

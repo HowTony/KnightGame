@@ -1,4 +1,4 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.GameTools;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 

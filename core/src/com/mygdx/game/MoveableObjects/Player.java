@@ -1,9 +1,10 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.MoveableObjects;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.GameTools.Assets;
 
 /**
  * Created by Tony Howarth on 6/27/2016.
@@ -38,15 +39,15 @@ public class Player extends Sprite {
     private float mXDisplacement = .0895f;
     private float mYDisplacement = .0655f;
 
-    private Animation mJumpAnime;
-    private Animation mFallingAnime;
-    private Animation mLandingAnime;
-    private Animation mRunAnime;
-    private Animation mWalkAnime;
-    private Animation mStandAnime;
-    private Animation mDeathAnime;
-    private Animation mCrouchAnime;
-    private Animation mShootAnime;
+    private com.mygdx.game.GameTools.Animation mJumpAnime;
+    private com.mygdx.game.GameTools.Animation mFallingAnime;
+    private com.mygdx.game.GameTools.Animation mLandingAnime;
+    private com.mygdx.game.GameTools.Animation mRunAnime;
+    private com.mygdx.game.GameTools.Animation mWalkAnime;
+    private com.mygdx.game.GameTools.Animation mStandAnime;
+    private com.mygdx.game.GameTools.Animation mDeathAnime;
+    private com.mygdx.game.GameTools.Animation mCrouchAnime;
+    private com.mygdx.game.GameTools.Animation mShootAnime;
 
     private boolean mPlayerOnGround;
     private boolean mFoot1OnGround = false;

@@ -1,11 +1,11 @@
-package com.mygdx.game;
+package com.mygdx.game.GameTools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Screens.PlayScreen;
-import com.mygdx.game.Sprites.Player;
-import com.mygdx.game.Sprites.ShotManager;
+import com.mygdx.game.MoveableObjects.Player;
+import com.mygdx.game.MoveableObjects.Managers.ShotManager;
 
 /**
  * Created by Tony Howarth on 7/19/2016.

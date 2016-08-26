@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.GameTools;
 
 import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapObject;

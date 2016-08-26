@@ -1,10 +1,10 @@
-package com.mygdx.game;
+package com.mygdx.game.GameTools;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.Sprites.Enemies;
-import com.mygdx.game.Sprites.EnemyManager;
-import com.mygdx.game.Sprites.GunShot;
-import com.mygdx.game.Sprites.ShotManager;
+import com.mygdx.game.MoveableObjects.Enemies;
+import com.mygdx.game.MoveableObjects.Managers.EnemyManager;
+import com.mygdx.game.MoveableObjects.GunShot;
+import com.mygdx.game.MoveableObjects.Managers.ShotManager;
 
 /**
  * Created by Tony Howarth on 7/19/2016.
