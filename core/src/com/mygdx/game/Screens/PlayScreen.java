@@ -14,6 +14,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Backgrounds.BackgroundManager;
+import com.mygdx.game.Backgrounds.ParallaxBackground;
+import com.mygdx.game.Backgrounds.ParallaxLayer;
 import com.mygdx.game.GameTools.*;
 import com.mygdx.game.HUD.HUD;
 import com.mygdx.game.MoveableObjects.Managers.EnemyManager;
@@ -44,6 +47,9 @@ public class PlayScreen implements Screen {
     private ShotManager mShots;
     private Vector3 mMousePos = new Vector3();
     public static boolean mIsPaused = false;
+    private BackgroundManager mBackground;
+
+
 
     public PlayScreen(Platformer game, SpriteBatch batch) {
         this.mGame = game;
@@ -56,8 +62,11 @@ public class PlayScreen implements Screen {
         mRenderer = new OrthogonalTiledMapRenderer(mMap, 1 / Platformer.PPM);
         mGameCam.position.set(mGamePort.getWorldWidth() / 2, mGamePort.getWorldHeight() / 2, 0);
 
+
+
         mWorld = new World(new Vector2(0, -9.81f), true);
         mPlayer = new Player(mWorld, mMousePos);
+        mBackground = new BackgroundManager(mPlayer);
         mHud = new HUD(mBatch, mPlayer);
         mEnemies = new EnemyManager(mWorld, mPlayer);
         mShots = new ShotManager(mPlayer);
@@ -80,8 +89,9 @@ public class PlayScreen implements Screen {
             //mGameCam.position.y = mPlayer.getmBody().getPosition().y;
             mPlayer.update(deltaTime);
             mEnemies.update(deltaTime);
-        }
 
+        }
+        mBackground.update(deltaTime);
         if (mPlayer.getBody().getPosition().y > 8) {
             mGameCam.position.y = mPlayer.getBody().getPosition().y;
         } else if (mPlayer.getBody().getPosition().y < 8) {
@@ -107,8 +117,9 @@ public class PlayScreen implements Screen {
 
             update(deltaTime);
 
+        mBackground.render(deltaTime,mBatch);
         mRenderer.render();
-        mHud.getmStage().draw();
+
         mHud.render(deltaTime, mBatch, mGameCam);
         mBatch.setProjectionMatrix(mGameCam.combined);
         mBatch.begin();

@@ -97,17 +97,18 @@ public class HUD implements Disposable{
         if(mTimeCount >= 1) {
             mWorldTimer -= 1;
         }
-        //mLevelLable = new Label("FPS "  + mFPS, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
     }
 
     public void render(float deltatime,Batch sb, OrthographicCamera cam){
+        mStage.draw();
         update(deltatime);
         sb.begin();
         Gdx.graphics.setCursor(mMouse);
 
         //mFontBasic.draw(sb,"FPS: " + mFPS , 50,1150);
         for(int i = 0; i < mPlayer.getHitsTilDeath(); i++){
-            sb.draw(mAlienHead, i * Platformer.V_WIDTH / 20, Platformer.V_HEIGHT * 10 / 11);
+            sb.draw(mAlienHead, i * Platformer.V_WIDTH / 20, Platformer.V_HEIGHT / 30 );
         }
         if(mPlayer.isDead()){
             mFontDeathMsg.draw(sb, "YOU DIED", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
