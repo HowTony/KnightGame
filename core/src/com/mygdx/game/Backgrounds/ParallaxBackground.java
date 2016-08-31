@@ -16,7 +16,7 @@ public class ParallaxBackground {
     private ParallaxLayer[] layers;
     private Camera camera;
     private Player mPlayer;
-    private int currentX;
+    private float currentX;
 
 
     public ParallaxBackground(ParallaxLayer[] layers, float width, float height, Player player) {
@@ -35,11 +35,11 @@ public class ParallaxBackground {
         mBatch.begin();
         for (int i = 0; i < layers.length; i++) {
             layers[i].getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-            currentX = (int)-mPlayer.getX() * layers[i].getSpeed();
+            currentX = -mPlayer.getX() * layers[i].getSpeed();
             if(i == 0){
-                mBatch.draw(layers[i].getTexture(),-Platformer.V_WIDTH /2 , -Platformer.V_HEIGHT /2, -currentX,0, layers[i].getTexture().getWidth(), layers[i].getTexture().getHeight()+100);
+                mBatch.draw(layers[i].getTexture(),-Platformer.V_WIDTH /2 , -Platformer.V_HEIGHT /2, (int)-currentX,0, layers[i].getTexture().getWidth(), layers[i].getTexture().getHeight()+100);
             }else{
-                mBatch.draw(layers[i].getTexture(),-Platformer.V_WIDTH /2 , -Platformer.V_HEIGHT /2, -currentX,0, layers[i].getTexture().getWidth(), layers[i].getTexture().getHeight());
+                mBatch.draw(layers[i].getTexture(),-Platformer.V_WIDTH /2 , -Platformer.V_HEIGHT /2, (int)-currentX,0, layers[i].getTexture().getWidth(), layers[i].getTexture().getHeight());
             }
         }
         mBatch.end();

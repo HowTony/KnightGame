@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class ParallaxLayer {
 
     private Texture region ;
-    private int mSpeed;
+    private float mSpeed;
 
     public ParallaxLayer(Texture texture,int speed){
         this.region  = texture;
@@ -19,7 +19,7 @@ public class ParallaxLayer {
         return region;
     }
 
-    public int getSpeed(){
+    public float getSpeed(){
         return mSpeed;
     }
 
