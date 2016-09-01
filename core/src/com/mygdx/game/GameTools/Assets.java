@@ -29,6 +29,9 @@ public class Assets {
     private TextureRegion[] mEnemy_FLYING_DIE = new TextureRegion[2];
     private TextureRegion mAlienHead = new TextureRegion();
     private TextureRegion mMouseCursor = new TextureRegion();
+    private TextureRegion mHealthBar = new TextureRegion();
+    private TextureRegion mHealthBubble = new TextureRegion();
+    private TextureRegion mPowerBubble = new TextureRegion();
 
     private Animation mAlienWalkingAnimation;
     private Animation mAlienStandingAnimation;
@@ -117,8 +120,13 @@ public class Assets {
 
        xLocation += 128;
        mMouseCursor = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
-
-       yLocation += 128;
+       xLocation += 128;
+       mHealthBar = new TextureRegion(mSpriteSheet, xLocation, yLocation, 256,128);
+       xLocation += 256;
+       mHealthBubble = new TextureRegion(mSpriteSheet, xLocation, yLocation, 64,64);
+       yLocation += 64;
+       mPowerBubble = new TextureRegion(mSpriteSheet, xLocation, yLocation, 64,64);
+       yLocation += 64;
        xLocation = 0;
        for(int i = 0; i < mEnemy_FLYING_Fly.length; i++){
            mEnemy_FLYING_Fly[i] = new TextureRegion(mSpriteSheet, xLocation, yLocation, 128, 128);
@@ -220,6 +228,16 @@ public class Assets {
 
     public TextureRegion getMousecursor(){
         return mMouseCursor;
+    }
+
+    public TextureRegion getHealthBar(){
+        return mHealthBar;
+    }
+    public TextureRegion getHealthBubble(){
+        return mHealthBubble;
+    }
+    public TextureRegion getPowerBubble(){
+        return mPowerBubble;
     }
 
     public Texture loadTexture(String file){

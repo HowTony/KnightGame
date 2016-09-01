@@ -20,7 +20,7 @@ public class GunShot {
     private final short CATEGORY_PLAYER = 0x0001;
     private float mTimeAlive = 0;
     private boolean mIsDead = false;
-    private float mBulletSpeed = 22f;
+    private float mBulletSpeed = 20f;
     private Assets mGameAssets;
     private Animation mRingBullet;
     private TextureRegion mCurrentPlayerFrame;
@@ -29,6 +29,10 @@ public class GunShot {
     private State mPreviousState;
     private float mStateTimer;
     private float mShotAngle;
+    private float mHeight = 1.28f;
+    private float mWidth = 1.28f;
+    private float mOriginX = mWidth / 2;
+    private float mOriginY = mHeight / 2;
 
     public GunShot(Player player){
         mPlayer = player;
@@ -71,7 +75,7 @@ public class GunShot {
 
     public void render(Batch sb){
         //if(mPlayer.isFacingRight())
-        sb.draw(mCurrentPlayerFrame, mBullet.getPosition().x - .52f , mBullet.getPosition().y - .5f, .525f, .495f, 1,1,1,1, mShotAngle);
+        sb.draw(mCurrentPlayerFrame, mBullet.getPosition().x - mOriginX , mBullet.getPosition().y - mOriginY, mOriginX, mOriginY, mWidth, mHeight ,1,1, mShotAngle);
         //sb.draw(mCurrentPlayerFrame, mBullet.getPosition().x - .54f , mBullet.getPosition().y - .46f, originX, originY, width, height, scaleX, ScaleY, roation);
     }
 

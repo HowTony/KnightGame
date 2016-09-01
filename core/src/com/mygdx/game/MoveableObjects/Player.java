@@ -1,9 +1,13 @@
 package com.mygdx.game.MoveableObjects;
-import com.badlogic.gdx.graphics.g2d.*;
+
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.GameTools.Animation;
 import com.mygdx.game.GameTools.Assets;
 
 /**
@@ -22,32 +26,30 @@ public class Player extends Sprite {
     private State mPreviousState;
     private float mStateTimer;
 
-    private float mPlayerWidth = 1;
-    private float mPlayerHeight = 1;
-    private float mSpriteXCenter = .48f;
-    private float mSpriteYCenter = .48f;
+    private float mPlayerWidth = 1.28f;
+    private float mPlayerHeight = 1.28f;
+    private float mSpriteXCenter = mPlayerWidth /2;
+    private float mSpriteYCenter = mPlayerHeight /2;
     private float mCorrectAngle;
 
-    private float mArmWidth = 1;
-    private float mArmHeight = 1;
-    private float mRightArmOriginX = .36f;
-    private float mRightArmOriginY = .55f;
-    private float mLeftArmOriginX = .3f;
-    private float mLeftArmOriginY = .52f;
+    private float mArmWidth = 1.23f;
+    private float mArmHeight = 1.23f;
+    private float mArmOriginX = mArmHeight/2;
+    private float mArmOriginY = mArmWidth/2;
     private float mSpriteScaleWidth = 1;
     private float mSpriteScaleHeight = 1;
-    private float mXDisplacement = .0895f;
-    private float mYDisplacement = .0655f;
+    private float mXDisplacement = .21f;
+    private float mYDisplacement = .21f;
 
-    private com.mygdx.game.GameTools.Animation mJumpAnime;
-    private com.mygdx.game.GameTools.Animation mFallingAnime;
-    private com.mygdx.game.GameTools.Animation mLandingAnime;
-    private com.mygdx.game.GameTools.Animation mRunAnime;
-    private com.mygdx.game.GameTools.Animation mWalkAnime;
-    private com.mygdx.game.GameTools.Animation mStandAnime;
-    private com.mygdx.game.GameTools.Animation mDeathAnime;
-    private com.mygdx.game.GameTools.Animation mCrouchAnime;
-    private com.mygdx.game.GameTools.Animation mShootAnime;
+    private Animation mJumpAnime;
+    private Animation mFallingAnime;
+    private Animation mLandingAnime;
+    private Animation mRunAnime;
+    private Animation mWalkAnime;
+    private Animation mStandAnime;
+    private Animation mDeathAnime;
+    private Animation mCrouchAnime;
+    private Animation mShootAnime;
 
     private boolean mPlayerOnGround;
     private boolean mFoot1OnGround = false;
@@ -58,7 +60,7 @@ public class Player extends Sprite {
     private float mCurrentTime;
 
     final short CATEGORY_PLAYER = 0x0001;
-    private int mHitsTilDeath = 3;
+    private int mHitsTilDeath = 7;
 
     private Vector2 mAimDirection;
     private Vector3 mMousePos;
@@ -136,6 +138,21 @@ public class Player extends Sprite {
         setPosition(mBody.getPosition().x - getWidth() / 2, .1f + mBody.getPosition().y - getHeight() / 2);
     }
 
+    public void render(SpriteBatch batch){
+        batch.draw(mCurrentPlayerFrame, getBody().getPosition().x - mPlayerWidth/2, getBody().getPosition().y - mPlayerHeight/3, mPlayerWidth , mPlayerHeight);
+        if(mPlayerOnGround && !isDead()) {
+            if(!mFacingRight) {
+                batch.draw(mGameAssets.getArmGunLEFT(), getBody().getPosition().x + mPlayerWidth/2.3f,
+                        getBody().getPosition().y - mPlayerHeight/2.9f, mArmOriginX, mArmOriginY, mArmWidth, mArmHeight,
+                        mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
+            }else{
+                batch.draw(mGameAssets.getArmGunRIGHT(), getBody().getPosition().x - mPlayerWidth/1.8f,
+                        getBody().getPosition().y - mPlayerHeight/2.9f, mArmOriginX, mArmOriginY, mArmWidth, mArmHeight,
+                        mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
+            }
+        }
+    }
+
     public void armUpdate(){
         mAimDirection = new Vector2((mMousePos.x) - mBody.getPosition().x, (mMousePos.y) - mBody.getPosition().y);
         mAimDirection.nor();
@@ -159,45 +176,14 @@ public class Player extends Sprite {
 
     }
 
-    public void AnimateSprite(float deltaTime){
-        mCurrentPlayerFrame = getFrame(deltaTime);
-    }
-
-    public Body getBody(){
-        return this.mBody;
-    }
-
-    public Vector2 getAimDirection(){
-        return mAimDirection;
-    }
-
-    public World getWorld(){
-        return mWorld;
-    }
-
-    public void render(SpriteBatch batch){
-        batch.draw(mCurrentPlayerFrame, getX() - mSpriteXCenter, getY() - mSpriteYCenter, mPlayerWidth , mPlayerHeight);
-        if(mPlayerOnGround && !isDead()) {
-            if(!mFacingRight) {
-                batch.draw(mGameAssets.getArmGunLEFT(), (getX() - mSpriteXCenter)  - .725f,
-                        (getY() - mSpriteYCenter) - .05f, mLeftArmOriginX, mLeftArmOriginY, mArmWidth, mArmHeight,
-                        mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
-            }else{
-                batch.draw(mGameAssets.getArmGunRIGHT(), (getX() - mSpriteXCenter) + .07f,
-                        (getY() - mSpriteYCenter) - .05f, mRightArmOriginX, mRightArmOriginY, mArmWidth, mArmHeight,
-                        mSpriteScaleWidth, mSpriteScaleHeight, mCorrectAngle);
-            }
-        }
-    }
-
     public void reverseSpriteDirection(boolean b){
         if(b){
             mFacingRight = false;
             mSpriteXCenter = -.48f;
-            mPlayerWidth = -1;
+            mPlayerWidth = -1.28f;
         }else{
             mFacingRight = true;
-            mPlayerWidth = 1;
+            mPlayerWidth = 1.28f;
             mSpriteXCenter = .48f;
         }
     }
@@ -206,14 +192,18 @@ public class Player extends Sprite {
         Vector2 bulletOrigin;
         Vector2 normalAimDir = new Vector2(mAimDirection);
         normalAimDir = normalAimDir.nor();
-        float gunLength = .4f;
+        float gunLength = .6f;
         if(!mFacingRight) {
-            bulletOrigin = new Vector2(((getX()) + mXDisplacement ) + normalAimDir.x * gunLength, ((getY() + mYDisplacement )) + normalAimDir.y * gunLength );
+            bulletOrigin = new Vector2((mBody.getPosition().x + mXDisplacement) + normalAimDir.x * gunLength, ((mBody.getPosition().y + mYDisplacement )) + normalAimDir.y * gunLength );
             return bulletOrigin;
         }else{
-            bulletOrigin = new Vector2(((getX()) - mXDisplacement ) + normalAimDir.x * gunLength, ((getY() + mYDisplacement )) + normalAimDir.y * gunLength );
+            bulletOrigin = new Vector2((mBody.getPosition().x - mXDisplacement) + normalAimDir.x * gunLength, ((mBody.getPosition().y + mYDisplacement)) + normalAimDir.y * gunLength );
             return bulletOrigin;
         }
+    }
+
+    public void AnimateSprite(float deltaTime){
+        mCurrentPlayerFrame = getFrame(deltaTime);
     }
 
     public TextureRegion getFrame(float deltaTime){
@@ -289,6 +279,7 @@ public class Player extends Sprite {
     public boolean isFoot1OnGround(){
         return mFoot1OnGround;
     }
+
     public boolean isFoot2OnGround(){
         return mFoot2OnGround;
     }
@@ -316,5 +307,18 @@ public class Player extends Sprite {
     public boolean isFacingRight(){
         return mFacingRight;
     }
+
+    public Body getBody(){
+        return this.mBody;
+    }
+
+    public Vector2 getAimDirection(){
+        return mAimDirection;
+    }
+
+    public World getWorld(){
+        return mWorld;
+    }
+
 
 }

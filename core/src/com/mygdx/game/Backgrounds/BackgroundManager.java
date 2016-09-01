@@ -30,12 +30,11 @@ public class BackgroundManager {
         mSky = new Texture(Gdx.files.internal("sky.png"));
         mGrass = new Texture(Gdx.files.internal("grass.png"));
 
-        mLayers = new ParallaxLayer[5];
+        mLayers = new ParallaxLayer[4];
         mLayers[0] = new ParallaxLayer(mSky, 1);
         mLayers[1] = new ParallaxLayer(mGrass, 2);
         mLayers[2] = new ParallaxLayer(mMountains, 3);
-        mLayers[3] = new ParallaxLayer(mTrees,15);
-        mLayers[4] = new ParallaxLayer(mTrees,20);
+        mLayers[3] = new ParallaxLayer(mTrees,20);
         mBackground = new ParallaxBackground(mLayers, Platformer.V_WIDTH, Platformer.V_HEIGHT - 200, mPlayer);
     }
 

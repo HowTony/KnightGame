@@ -33,6 +33,9 @@ public class HUD implements Disposable{
     private Assets mAssets;
     private TextureRegion mAlienHead;
     private TextureRegion mMouseCursor;
+    private TextureRegion mHealthBar;
+    private TextureRegion mHealth;
+    private TextureRegion mPower;
     private Pixmap mPix;
     private Cursor mMouse;
 
@@ -58,6 +61,9 @@ public class HUD implements Disposable{
         mTimeCount = 0;
         mScore = 0;
         mMouseCursor = mAssets.getMousecursor();
+        mHealthBar = mAssets.getHealthBar();
+        mHealth = mAssets.getHealthBubble();
+        mPower = mAssets.getPowerBubble();
         mPix = new Pixmap(Gdx.files.internal("MouseCursor.png"));
         mMouse = Gdx.graphics.newCursor(mPix, 20, 20);
 
@@ -100,23 +106,26 @@ public class HUD implements Disposable{
 
     }
 
-    public void render(float deltatime,Batch sb, OrthographicCamera cam){
+    public void render(float deltatime,Batch batch, OrthographicCamera cam){
         mStage.draw();
         update(deltatime);
-        sb.begin();
+        batch.begin();
         Gdx.graphics.setCursor(mMouse);
 
-        //mFontBasic.draw(sb,"FPS: " + mFPS , 50,1150);
+        batch.draw(mHealthBar,Platformer.V_WIDTH / 20, Platformer.V_HEIGHT / 30);
+        //mFontBasic.draw(batch,"FPS: " + mFPS , 50,1150);
         for(int i = 0; i < mPlayer.getHitsTilDeath(); i++){
-            sb.draw(mAlienHead, i * Platformer.V_WIDTH / 20, Platformer.V_HEIGHT / 30 );
+            batch.draw(mHealth,Platformer.V_WIDTH/8 +(i*12.3f), (Platformer.V_HEIGHT / 30) + 60 );
         }
+        batch.draw(mAlienHead, Platformer.V_WIDTH/28, Platformer.V_HEIGHT/ 30);
+
         if(mPlayer.isDead()){
-            mFontDeathMsg.draw(sb, "YOU DIED", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
+            mFontDeathMsg.draw(batch, "YOU DIED", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
         }
         if(PlayScreen.mIsPaused){
-            mFontDeathMsg.draw(sb, "PAUSED", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
+            mFontDeathMsg.draw(batch, "PAUSED", Platformer.V_WIDTH / 3, Platformer.V_HEIGHT / 2);
         }
-        sb.end();
+        batch.end();
 
     }
 
