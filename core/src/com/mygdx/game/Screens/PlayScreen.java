@@ -58,7 +58,7 @@ public class PlayScreen implements Screen {
         mGamePort = new StretchViewport(Platformer.V_WIDTH / Platformer.PPM, Platformer.V_HEIGHT / Platformer.PPM, mGameCam);
 
         mMapLoader = new TmxMapLoader();
-        mMap = mMapLoader.load("test3.tmx");
+        mMap = mMapLoader.load("core/assets/test3.tmx");
         mRenderer = new OrthogonalTiledMapRenderer(mMap, 1 / Platformer.PPM);
         mGameCam.position.set(mGamePort.getWorldWidth() / 2, mGamePort.getWorldHeight() / 2, 0);
 

@@ -93,7 +93,7 @@ public class Player extends Sprite {
         mBody = mWorld.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(.15f,.33f);
+        shape.setAsBox(.15f,.4f);
         fixtureDef.shape = shape;
         //fixtureDef.density = 0;
         fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
@@ -101,14 +101,14 @@ public class Player extends Sprite {
         mBody.createFixture(fixtureDef).setUserData("player");
 
         //create foot sensor 1
-        shape.setAsBox(.01f, .03f, new Vector2(-.15f, -.32f), 0);
+        shape.setAsBox(.01f, .1f, new Vector2(-.16f, -.31f), 0);
         fixtureDef.shape = shape;
         fixtureDef.isSensor = true;
         mBody.createFixture(fixtureDef).setUserData("foot1");
 
 
         //create foot sensor 2
-        shape.setAsBox(.01f, .03f, new Vector2(.15f, -.32f), 0);
+        shape.setAsBox(.01f, .1f, new Vector2(.16f, -.31f), 0);
         fixtureDef.shape = shape;
         fixtureDef.isSensor = true;
         mBody.createFixture(fixtureDef).setUserData("foot2");
@@ -159,6 +159,7 @@ public class Player extends Sprite {
         Vector2 xAxis = new Vector2(1, 0);
         float angle = MathUtils.atan2(mAimDirection.y, mAimDirection.x) - MathUtils.atan2(xAxis.y, xAxis.x);
         mCorrectAngle = angle * MathUtils.radiansToDegrees;
+
 
 //        if(mFacingRight) {
 //            if (mCorrectAngle > 50) {

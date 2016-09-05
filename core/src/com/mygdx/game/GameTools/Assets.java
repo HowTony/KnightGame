@@ -48,7 +48,7 @@ public class Assets {
     private Animation mEnemy_FLYING_DIE_Anim;
 
    public void load(){
-       mSpriteSheet = loadTexture("alien_sprite_NOARMS.png");
+       mSpriteSheet = loadTexture("core/assets/alien_sprite_NOARMS.png");
 
        int yLocation = 0;
        int xLocation = 1;

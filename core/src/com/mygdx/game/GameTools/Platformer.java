@@ -29,7 +29,4 @@ public class Platformer extends Game {
         super.render();
     }
 
-    public static float getPpm(){
-        return PPM;
-    }
 }

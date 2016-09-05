@@ -1,9 +1,7 @@
 package com.mygdx.game.Backgrounds;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.GameTools.Platformer;
 import com.mygdx.game.MoveableObjects.Player;
@@ -25,10 +23,10 @@ public class BackgroundManager {
 
     public BackgroundManager(Player player){
         mPlayer = player;
-        mTrees = new Texture(Gdx.files.internal("Trees.png"));
-        mMountains = new Texture(Gdx.files.internal("mountainBG.png"));
-        mSky = new Texture(Gdx.files.internal("sky.png"));
-        mGrass = new Texture(Gdx.files.internal("grass.png"));
+        mTrees = new Texture(Gdx.files.internal("core/assets/Trees.png"));
+        mMountains = new Texture(Gdx.files.internal("core/assets/mountainBG.png"));
+        mSky = new Texture(Gdx.files.internal("core/assets/sky.png"));
+        mGrass = new Texture(Gdx.files.internal("core/assets/grass.png"));
 
         mLayers = new ParallaxLayer[4];
         mLayers[0] = new ParallaxLayer(mSky, 1);

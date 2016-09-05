@@ -64,11 +64,11 @@ public class HUD implements Disposable{
         mHealthBar = mAssets.getHealthBar();
         mHealth = mAssets.getHealthBubble();
         mPower = mAssets.getPowerBubble();
-        mPix = new Pixmap(Gdx.files.internal("MouseCursor.png"));
+        mPix = new Pixmap(Gdx.files.internal("core/assets/MouseCursor.png"));
         mMouse = Gdx.graphics.newCursor(mPix, 20, 20);
 
-        mFontBasic = new BitmapFont(Gdx.files.internal("myfont.fnt"));
-        mFontDeathMsg = new BitmapFont(Gdx.files.internal("perished.fnt"));
+        mFontBasic = new BitmapFont(Gdx.files.internal("core/assets/myfont.fnt"));
+        mFontDeathMsg = new BitmapFont(Gdx.files.internal("core/assets/perished.fnt"));
         mFontBasic.setColor(Color.WHITE);
         //how to scale the font
 //        mFont.getData().scale(.7f);

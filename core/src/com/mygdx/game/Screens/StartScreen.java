@@ -26,9 +26,9 @@ public class StartScreen implements Screen{
     public StartScreen(Platformer game, SpriteBatch sb){
         mGame = game;
         mBatch = sb;
-        mStartImage = new Texture(Gdx.files.internal("Poster1.jpg"));
-        mPix = new Pixmap(Gdx.files.internal("MouseCursor.png"));
-        mFontBasic = new BitmapFont(Gdx.files.internal("perished.fnt"));
+        mStartImage = new Texture(Gdx.files.internal("core/assets/Poster1.jpg"));
+        mPix = new Pixmap(Gdx.files.internal("core/assets/MouseCursor.png"));
+        mFontBasic = new BitmapFont(Gdx.files.internal("core/assets/perished.fnt"));
         mMouse = Gdx.graphics.newCursor(mPix, 20, 20);
     }
 
